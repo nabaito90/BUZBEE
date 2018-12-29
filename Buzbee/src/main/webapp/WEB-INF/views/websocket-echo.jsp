@@ -19,12 +19,14 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#sendBtn").click(function() {
+				if($("#message").val().trim() == '') return;
 				sendMessage();
 				$('#message').val('')
 			});
 		
 			$("#message").keydown(function(key) {
-				if (key.keyCode == 13) {// 엔터
+				if($("#message").val().trim() == '') return;
+				if(key.keyCode == 13) {// 엔터
 			       sendMessage();
 			       $('#message').val('')
 				}
@@ -56,6 +58,9 @@
 <body>
 	<input type="text" id="message" />
 	<input type="button" id="sendBtn" value="전송" />
+	<form action="${pageContext.request.contextPath}/logout" method="GET"> 
+		<input type="submit" value="로그아웃" /> 
+	</form>
 	<div id="data"></div>
 </body>
 </html>
