@@ -9,10 +9,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import bit.spring4.buzbee.model.Google;
+
 public class TrendCrawler {
-	ArrayList<String> queryList = new ArrayList<String>();
+	ArrayList<Google> queryList = new ArrayList<Google>();
 	
-	public ArrayList<String> getTIOBEs(String cssQuery) {
+	public ArrayList<Google> getTIOBEs(String cssQuery) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
 		String date = sdf.format(new Date());
 		String monthStr = date.substring(3);
@@ -66,6 +68,6 @@ public class TrendCrawler {
 		String text = element.substring(0, element.indexOf("+")+1);
 		String hit = text.substring(text.lastIndexOf(" ")+1);
 		String query = text.substring(0, text.lastIndexOf(" "));
-		queryList.add("검색어 : " + query + ", 검색수 : " + hit);
+		queryList.add(new Google(query, hit));
 	}
 }

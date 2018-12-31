@@ -11,8 +11,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/")
 	public ModelAndView home() {
-		TrendCrawler tc = new TrendCrawler();
-		
-		return new ModelAndView("websocket-echo", "list", tc.getTIOBEs("item"));
+		return new ModelAndView("websocket-echo", "list", new TrendCrawler().getTIOBEs("item"));
 	}
 }

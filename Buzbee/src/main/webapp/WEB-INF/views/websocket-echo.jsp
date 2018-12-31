@@ -63,8 +63,18 @@
 	</form>
 	<div id="data"></div>
 	<div id="content">
+		<br/>
 		<c:forEach items='${list}' var='item'>
-			${item}<br/>
+			<table style='border-top:1px solid black;'>
+				<tr>
+					<th>검색어</th>
+					<td>${item.query}</td>
+				</tr>
+				<tr>
+					<th>조회수</th>
+					<td>${item.hit}</td>
+				</tr>				
+			</table>
 		</c:forEach>
 	</div>
 </body>
