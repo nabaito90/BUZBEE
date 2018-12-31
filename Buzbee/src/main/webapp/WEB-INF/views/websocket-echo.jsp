@@ -62,6 +62,11 @@
 		<input type="submit" value="로그아웃" /> 
 	</form>
 	<div id="data"></div>
+	<div id="content">
+		<c:forEach items='${list}' var='item'>
+			${item}<br/>
+		</c:forEach>
+	</div>
 </body>
 </html>
 
