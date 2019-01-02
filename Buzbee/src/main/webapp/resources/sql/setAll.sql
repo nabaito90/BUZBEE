@@ -1,0 +1,50 @@
+CREATE SEQUENCE MEMBER_SEQ START WITH 0 
+INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE;   
+CREATE SEQUENCE BOARD_SEQ START WITH 0 
+INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
+CREATE SEQUENCE NOTE_SEQ START WITH 0 
+INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
+CREATE SEQUENCE FILES_SEQ START WITH 0 
+INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
+
+CREATE TABLE FILES(
+   F_NO NUMBER(15) CONSTRAINT F_NO_PK primary key, 
+   F_NAME VARCHAR2(50) NOT NULL,
+   F_SAVENAME VARCHAR2(60) CONSTRAINT F_SAVENAME_UNI UNIQUE NOT NULL, 
+   F_TYPE VARCHAR2(10) NOT NULL,
+   F_SIZE NUMBER(8) NOT NULL
+);
+
+CREATE TABLE MEMBER( 
+   M_NO NUMBER(11) CONSTRAINT M_NO_PK primary key, 
+   M_ID VARCHAR2(30) CONSTRAINT M_ID_UNI UNIQUE NOT NULL, 
+   M_NAME VARCHAR2(15) NOT NULL, 
+   M_EMAIL VARCHAR2(30) CONSTRAINT M_EMAIL_UNI UNIQUE, 
+   M_PHONE NUMBER(11) CONSTRAINT M_PHONE_UNI UNIQUE, 
+   M_PASSWORD VARCHAR2(15), 
+   F_NO CONSTRAINT F_NO_FK references FILES(F_NO) on delete cascade,
+   M_DELETE NUMBER(2), 
+   M_RDATE DATE
+); 
+
+CREATE TABLE AUTHORITY(
+   M_NO CONSTRAINT AUTH_M_NO_PK primary key 
+   references MEMBER(M_NO) NOT NULL,
+   A_ENABLED CHAR(1) NOT NULL,
+   A_AUTH VARCHAR2(15) NOT NULL
+);
+
+insert into FILES values(FILES_SEQ.nextval, 'a', 'a', 'a', 1);
+insert into FILES values(FILES_SEQ.nextval, 'b', 'b', 'b', 1);
+insert into FILES values(FILES_SEQ.nextval, 'c', 'c', 'c', 1);
+insert into FILES values(FILES_SEQ.nextval, 'd', 'd', 'd', 1);
+
+insert into MEMBER values(MEMBER_SEQ.nextval, 'admin', '全辨悼', 'aa@aa.aa', 01012344321, 'admin', 1, null, SYSDATE);
+insert into MEMBER values(MEMBER_SEQ.nextval, 'user1', '全辨辑', 'bb@aa.aa', 01012344322, 'admin', 2, null, SYSDATE);
+insert into MEMBER values(MEMBER_SEQ.nextval, 'user2', '全辨巢', 'cc@aa.aa', 01012344323, 'admin', 3, null, SYSDATE);
+insert into MEMBER values(MEMBER_SEQ.nextval, 'user3', '全辨合', 'dd@aa.aa', 01012344324, 'admin', 4, null, SYSDATE);
+
+insert into AUTHORITY values(1, 1, 'ROLE_ADMIN');
+insert into AUTHORITY values(2, 1, 'ROLE_USER');
+insert into AUTHORITY values(3, 1, 'ROLE_USER');
+insert into AUTHORITY values(4, 1, 'ROLE_USER');

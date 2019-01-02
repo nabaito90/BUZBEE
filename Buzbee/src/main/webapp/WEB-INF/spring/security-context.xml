@@ -7,7 +7,7 @@
 
 	<http auto-config='true' use-expressions="true">
 		<intercept-url pattern="/resources/**" access="hasRole('ADMIN')" />   
-		<intercept-url pattern="/**" access="permitAll" /> 
+		<intercept-url pattern="/**" access="hasRole('ADMIN')" /> 
 		<access-denied-handler error-page="/denied.do"/>
 		<form-login />
 		<logout />
@@ -25,18 +25,23 @@
 		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/login?logout" />
 		-->
 		
-		<!-- enable csrf protection 
-		<csrf/>  
-		-->
+		<!-- enable csrf protection -->
+		<csrf disabled='false'/>  
 	</http> 
 	
+	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <beans:property name="driverClass" value="oracle.jdbc.OracleDriver" />
+        <beans:property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521/JAVA" />
+        <beans:property name="username" value="moon" />
+        <beans:property name="password" value="java" />
+    </beans:bean>
+    
     <authentication-manager>
-	    <authentication-provider>
-	    	<user-service>
-	    		<!-- Add Security -->
-	    		<user name='admin' password='{noop}admin' authorities='ROLE_ADMIN' />
-	    		<user name='user' password='{noop}password' authorities='ROLE_USER' />
-	    	</user-service>
-	    </authentication-provider>
-	</authentication-manager>	
+        <authentication-provider>
+            <jdbc-user-service id="userService" data-source-ref="dataSource"
+                users-by-username-query="select M.M_ID as username, M.M_PASSWORD as password, A.A_ENABLED as enabled from MEMBER M, AUTHORITY A where M.M_NO=A.M_NO and M.M_ID=?"            
+                authorities-by-username-query="select M.M_ID as username, A.A_AUTH as authority from MEMBER M, AUTHORITY A where M.M_NO=A.M_NO and M.M_ID=?"   
+            />
+        </authentication-provider>
+    </authentication-manager>
 </beans:beans>
