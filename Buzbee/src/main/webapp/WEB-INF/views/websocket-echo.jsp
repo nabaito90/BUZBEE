@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!DOCTYPE html>
 <html>
@@ -58,9 +59,12 @@
 <body>
 	<input type="text" id="message" />
 	<input type="button" id="sendBtn" value="전송" />
-	<form action="${pageContext.request.contextPath}/logout" method="GET"> 
-		<input type="submit" value="로그아웃" /> 
-	</form>
+	<sec:authorize access='isAnonymous()'>
+		<input type="submit" value="로그인" onclick='location.href="login"'/> 
+	</sec:authorize>
+	<sec:authorize access='isAuthenticated()'>
+		<input type="submit" value="로그아웃" onclick='location.href="logout"' /> 
+	</sec:authorize>
 	<div id="data"></div>
 	<div id="content">
 		<br/>

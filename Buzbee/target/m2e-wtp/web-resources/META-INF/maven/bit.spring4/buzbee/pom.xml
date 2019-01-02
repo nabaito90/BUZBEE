@@ -21,7 +21,6 @@
 		    <version>1.11.1</version>
 		</dependency>
 	
-		<!-- 스프링 시큐리티 관련 라이브러리 시작 -->
 		<!-- 스프링 시큐리티 -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
@@ -33,14 +32,11 @@
 		    <artifactId>spring-security-config</artifactId>
 		    <version>5.1.2.RELEASE</version>
 		</dependency>
-		
-		<!-- 프록시객체 생성 CGLIB -->
 		<dependency>
-		    <groupId>cglib</groupId>
-		    <artifactId>cglib</artifactId>
-		    <version>3.2.10</version>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>5.1.2.RELEASE</version>
 		</dependency>
-		<!-- 스프링 시큐리티 관련 라이브러리 끝 -->
 		
 		<!-- 웹소켓 관련 라이브러리 시작 -->
 		<!-- 스프링 코어 -->
@@ -111,7 +107,6 @@
 			<artifactId>jackson-core-lgpl</artifactId> 
 			<version>1.9.13</version> 
 		</dependency>	
-		
 		<dependency> 
 			<groupId>org.codehaus.jackson</groupId> 
 			<artifactId>jackson-mapper-asl</artifactId> 
