@@ -1,8 +1,16 @@
+DROP TABLE MEMBER CASCADE CONSTRAINTS;
+DROP TABLE BOARD CASCADE CONSTRAINTS;
+DROP TABLE FILES CASCADE CONSTRAINTS;
+DROP TABLE AUTHORITY CASCADE CONSTRAINTS;
+
+DROP SEQUENCE MEMBER_SEQ;
+DROP SEQUENCE BOARD_SEQ;
+DROP SEQUENCE FILES_SEQ;
+DROP SEQUENCE AUTHORITY_SEQ;
+
 CREATE SEQUENCE MEMBER_SEQ START WITH 0 
 INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE;   
 CREATE SEQUENCE BOARD_SEQ START WITH 0 
-INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
-CREATE SEQUENCE NOTE_SEQ START WITH 0 
 INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
 CREATE SEQUENCE FILES_SEQ START WITH 0 
 INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
@@ -39,12 +47,14 @@ insert into FILES values(FILES_SEQ.nextval, 'b', 'b', 'b', 1);
 insert into FILES values(FILES_SEQ.nextval, 'c', 'c', 'c', 1);
 insert into FILES values(FILES_SEQ.nextval, 'd', 'd', 'd', 1);
 
-insert into MEMBER values(MEMBER_SEQ.nextval, 'admin', '全辨悼', 'aa@aa.aa', 01012344321, 'admin', 1, null, SYSDATE);
-insert into MEMBER values(MEMBER_SEQ.nextval, 'user1', '全辨辑', 'bb@aa.aa', 01012344322, 'admin', 2, null, SYSDATE);
-insert into MEMBER values(MEMBER_SEQ.nextval, 'user2', '全辨巢', 'cc@aa.aa', 01012344323, 'admin', 3, null, SYSDATE);
-insert into MEMBER values(MEMBER_SEQ.nextval, 'user3', '全辨合', 'dd@aa.aa', 01012344324, 'admin', 4, null, SYSDATE);
+insert into MEMBER values(MEMBER_SEQ.nextval, 'admin', '全辨悼', 'aa@aa.aa', 01012344321, '{noop}admin', 1, null, SYSDATE);
+insert into MEMBER values(MEMBER_SEQ.nextval, 'user1', '全辨辑', 'bb@aa.aa', 01012344322, '{noop}1234', 2, null, SYSDATE);
+insert into MEMBER values(MEMBER_SEQ.nextval, 'user2', '全辨巢', 'cc@aa.aa', 01012344323, '{noop}1234', 3, null, SYSDATE);
+insert into MEMBER values(MEMBER_SEQ.nextval, 'user3', '全辨合', 'dd@aa.aa', 01012344324, '{noop}1234', 4, null, SYSDATE);
 
 insert into AUTHORITY values(1, 1, 'ROLE_ADMIN');
 insert into AUTHORITY values(2, 1, 'ROLE_USER');
 insert into AUTHORITY values(3, 1, 'ROLE_USER');
 insert into AUTHORITY values(4, 1, 'ROLE_USER');
+
+commit;
