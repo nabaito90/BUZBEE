@@ -4,9 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias alias="Member" type='bit.spring4.buzbee.model.Member'/>
 		<!-- append -->
 	</typeAliases>
 	<mappers>
+		<mapper resource='mybatis/Member.xml'></mapper>
 		<!-- append -->
 	</mappers>
 </configuration>
