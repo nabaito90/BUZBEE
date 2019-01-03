@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +23,13 @@
   <link href="css/moon.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/style-responsive.css" rel="stylesheet">
+  <!-- jQuery CDN-->
+  <script
+	src="https://code.jquery.com/jquery-1.9.0.js"
+	integrity="sha256-TXsBwvYEO87oOjPQ9ifcb7wn3IrrW91dhj6EMEtRLvM="
+	crossorigin="anonymous"></script>
+  <!-- Web socket CDN -->
+  <script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
 
   <!-- =======================================================
     Template Name: Dashio
@@ -30,6 +37,48 @@
     Author: TemplateMag.com
     License: https://templatemag.com/license/
   ======================================================= -->
+  <!-- Web Socket js -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#sendBtn").click(function() {
+				if($("#search2").val().trim() == '') return;
+				sendMessage();
+				$('#search2').val('')
+			});
+		
+			$("#search2").keydown(function(key) {
+				if($("#search2").val().trim() == '') return;
+				if(key.keyCode == 13) {// 엔터
+			       sendMessage();
+			       $('#search2').val('')
+				}
+	  		});
+		});
+		
+		// 웹소켓을 지정한 url로 연결한다.
+		let sock = new SockJS("<c:url value="/echo"/>");
+		sock.onmessage = onMessage;
+		sock.onclose = onClose;
+		
+		// 메시지 전송
+		function sendMessage() {
+	       sock.send($("#search2").val());
+		}
+		
+		// 서버로부터 메시지를 받았을 때
+		function onMessage(msg) {
+			var data = msg.data;
+			var id = data.substring(0, data.indexOf(":"));
+			data = data.substring(data.indexOf(":") + 1);
+			var html = '<div class="media"><a class="media-left" href="#fake"><img alt="" class="media-object img-rounded" src="http://placehold.it/64x64"></a><div class="media-body"><h4 class="media-heading">' + id + '</h4><p>' + data + '</p><ul class="nav nav-pills nav-pills-custom"><li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li></ul></div></div>';
+			$("#buz").prepend(html);
+		}
+		
+		// 서버와 연결을 끊었을 때
+		function onClose(evt) {
+			$("#buz").append("연결 끊김");
+		}
+	</script>
 </head>
 
 <body>
@@ -368,24 +417,22 @@
     <section id="main-content">
       <section class="wrapper site-min-height" id='section-body'>
         <div id='content-area'>
-		<div class="col-sm-6" id='timeline'>
+		<div class="col-sm-9" id='timeline'>
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<div class="media">
-						<a class="media-left" href="#fake">
-							<img alt="" class="media-object img-rounded" src="http://placehold.it/35x35">
-						</a>
-						<div class="media-body">
-							<div class="form-group has-feedback">
-								<label class="control-label sr-only" for="inputSuccess5">Hidden label</label>
-								<input type="text" class="form-control" id="search2" aria-describedby="search">
-								<span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true"></span>
-								<span id="search2" class="sr-only">(success)</span>
-							</div>
+					<a class="media-left" href="#fake">
+						<img alt="" class="media-object img-rounded" src="http://placehold.it/35x35">
+					</a>
+					<div class="media-body">
+						<div class="form-group has-feedback">
+							<label class="control-label sr-only" for="inputSuccess5">Hidden label</label>
+							<input type="text" class="form-control" id="search2" aria-describedby="search">
+							<span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true"></span>
+							<span id="search2" class="sr-only">(success)</span>
 						</div>
 					</div>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body" id='buz'>
 					<div class="media">
 						<a class="media-left" href="#fake">
 							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
@@ -416,40 +463,8 @@
 								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
 							</ul>
 						</div>
-
 					</div>
-					<div class="media">
-						<a class="media-left" href="#fake">
-							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Media heading</h4>
-							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
-							<ul class="nav nav-pills nav-pills-custom">
-								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-							</ul>
-						</div>
-
-					</div>
-					<div class="media">
-						<a class="media-left" href="#fake">
-							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">Media heading</h4>
-							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
-							<ul class="nav nav-pills nav-pills-custom">
-								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-							</ul>
-						</div>
-
-					</div>
+					
 					<div class="media">
 						<a class="media-left" href="#fake">
 							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
@@ -465,22 +480,38 @@
 							</ul>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<br>
-			<br>
-			<br>
-
-
-			<div class="panel panel-default">
-				<div class="panel-heading">Prova</div>
-				<div class="panel-body">
-					<ul class="nav nav-pills">
-						<li role="presentation" class="active"><a href="#">Home</a></li>
-						<li role="presentation"><a href="#">Profile</a></li>
-						<li role="presentation"><a href="#">Messages</a></li>
-					</ul>
+					
+					<div class="media">
+						<a class="media-left" href="#fake">
+							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading</h4>
+							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
+							<ul class="nav nav-pills nav-pills-custom">
+								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="media">
+						<a class="media-left" href="#fake">
+							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading</h4>
+							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
+							<ul class="nav nav-pills nav-pills-custom">
+								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -590,10 +621,11 @@
     </footer>
     <!--footer end-->
   </section>
+  
   <!-- js placed at the end of the document so the pages load faster -->
-  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/jquery/jquery.min.js" ></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-  <script src="lib/jquery-ui-1.9.2.custom.min.js"></script>
+  <script src="lib/jquery-ui-1.9.2.custom.min.js" ></script>
   <script src="lib/jquery.ui.touch-punch.min.js"></script>
   <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="lib/jquery.scrollTo.min.js"></script>
