@@ -1,0 +1,81 @@
+#cham-profile-main-p {
+    width: 100% !important;
+    height: : 100% !important;
+}
+#mt {
+    margin-top: 0px;
+}
+
+#row content-panel{
+    margin: 10px 0 0;
+    background-color: #fff;
+    line-height: 16px;
+    padding: 15px;
+}
+#col-sm-12 {
+	margin: 0px;
+}
+#tweet-header{
+    font-size: 15px;
+}
+.content-panel h4 {
+  display: inline-block;
+}
+
+.content-panel small {
+  font-size: 66%;
+  margin-left: 6px;
+}
+
+.content-panel li {
+  min-height: 70px;
+}
+
+.buzbee-list {
+  list-style: none;
+  margin: 8px 4px 0;
+  padding: 0;
+}
+.buzbee-card {
+  background-color: #fff;
+  border-bottom: 1px solid #e6ecf0;
+  min-height: 52px;
+  padding: 9px 12px;
+}
+.btn-follow {
+  border-color: #1DA1F2;
+  color: #1DA1F2;
+  background-color: #fff;
+  border: 1px solid #1da1f2;
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  box-shadow: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  min-width: 89px;
+}
+
+.btn-follow:hover {
+  background-color: #E8F5FD;
+}
+
+.buzbee-content {
+  margin-left: 58px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: normal;
+}
+.buzbee-footer-btn {
+  margin-right: 30px;
+}
+.buzbee-footer-btn i, .buzbee-footer-btn span {
+  color: #657786;
+  font-size: 16px;
+}
+.buzbee-footer-btn span {
+  margin-left: 8px;
+}
