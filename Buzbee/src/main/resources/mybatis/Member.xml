@@ -15,5 +15,9 @@
 		<result property='m_delete' column='M_DELETE'></result>
 		<result property='m_rdate' column='M_RDATE'></result>
 	</resultMap>
+	
+	<select id='selectById' parameterType='String' resultType='Member'>
+		select * from MEMBER where M_ID=#{id}
+	</select>	
 	<!-- append -->
 </mapper>

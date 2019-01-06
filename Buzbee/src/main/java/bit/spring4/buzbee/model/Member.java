@@ -14,6 +14,8 @@ public class Member {
 	private int m_delete;
 	private String m_rdate;
 	
+	public Member() {}
+	
 	public Member(long m_no, String m_id, String m_name, String m_email, String m_phone, String m_password, long f_no,
 			int m_delete, String m_rdate) {
 		this.m_id = m_id;

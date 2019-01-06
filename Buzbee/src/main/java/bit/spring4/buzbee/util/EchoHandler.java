@@ -17,15 +17,15 @@ public class EchoHandler extends TextWebSocketHandler {
 	  @Override
 	  public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 	    sessionList.add(session);
-	    logger.info("{} 연결됨", session.getId());
+	    logger.info("{} 연결됨", session.getPrincipal().getName());
 	  }
 	 
 	  // 클라이언트가 서버로 메시지를 전송했을 때 실행되는 메소드
 	  @Override
 	  protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	    logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
+	    logger.info("{}로 부터 {} 받음", session.getPrincipal().getName(), message.getPayload());
 	    for (WebSocketSession sess : sessionList) {
-	      sess.sendMessage(new TextMessage(session.getId() + " : " + message.getPayload()));
+	      sess.sendMessage(new TextMessage(session.getPrincipal().getName() + " : " + message.getPayload()));
 	    }
 	  }
 	 
@@ -33,7 +33,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	  @Override
 	  public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 	    sessionList.remove(session);
-	    logger.info("{} 연결 끊김", session.getId());
+	    logger.info("{} 연결 끊김", session.getPrincipal().getName());
 	  }
 	}
 

@@ -5,3 +5,13 @@
 .media{border-bottom:1px solid Gainsboro;}
 #media-body{margin:0;padding:0}
 .media-heading{font-weight:bold;}
+#file-input
+{
+    display: none;
+}
+
+.image-upload span
+{
+    width: 80px;
+    cursor: pointer;
+}

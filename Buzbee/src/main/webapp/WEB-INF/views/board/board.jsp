@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authentication property="principal" var="loginDTO"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +39,7 @@
     Author: TemplateMag.com
     License: https://templatemag.com/license/
   ======================================================= -->
-  <!-- Web Socket js -->
+    <!-- Web Socket js -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#sendBtn").click(function() {
@@ -68,9 +70,21 @@
 		// 서버로부터 메시지를 받았을 때
 		function onMessage(msg) {
 			var data = msg.data;
-			var id = data.substring(0, data.indexOf(":"));
 			data = data.substring(data.indexOf(":") + 1);
-			var html = '<div class="media"><a class="media-left" href="#fake"><img alt="" class="media-object img-rounded" src="http://placehold.it/64x64"></a><div class="media-body"><h4 class="media-heading">' + id + '</h4><p>' + data + '</p><ul class="nav nav-pills nav-pills-custom"><li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li><li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li></ul></div></div>';
+			var html = '<div class="media">'+
+					       '<a class="media-left" href="#fake">'+
+					           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
+					       '</a>'+
+					       '<div class="media-body">'+
+					            '<h4 class="media-heading">${loginInfo.m_name} <a href="${loginInfo.m_id}">@${loginInfo.m_id}</a></h4><p>' + data + '</p>'+
+					            '<ul class="nav nav-pills nav-pills-custom">'+
+					                '<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>'+
+					                '<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>'+
+					                '<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>'+
+					                '<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>'+
+					            '</ul>'+
+					       '</div>'+
+					  '</div>';
 			$("#buz").prepend(html);
 		}
 		
@@ -281,7 +295,7 @@
       </div>
       <div class="top-menu">
         <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="login.html">Logout</a></li>
+          <li><a class="logout" href="logout">Logout</a></li>
         </ul>
       </div>
     </header>
@@ -295,7 +309,8 @@
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
           <p class="centered"><a href="profile.html"><img src="img/ui-sam.jpg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">Sam Soffes</h5>
+          <h5 class="centered">${member.m_name}</h5>
+          <h5 class="centered">@${member.m_id}</h5>
           <li class="mt">
             <a href="index.html">
               <i class="fa fa-dashboard"></i>

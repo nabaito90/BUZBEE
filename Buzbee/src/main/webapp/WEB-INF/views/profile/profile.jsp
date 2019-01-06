@@ -426,7 +426,7 @@
 			<button type="button" class="btn btn-warning">Likes</button>
 		  </p>			
 		</div>
-		<div class="col-sm-8" id='timeline'>
+		<div class="col-sm-9" id='timeline'>
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<a class="media-left" href="#fake">

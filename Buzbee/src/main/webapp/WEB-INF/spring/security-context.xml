@@ -9,7 +9,10 @@
 		<intercept-url pattern="/resources/**" access="hasRole('ADMIN')" />   
 		<intercept-url pattern="/**" access="permitAll" /> 
 		<access-denied-handler error-page="/denied.do"/>
-		<form-login />
+		<form-login 
+			default-target-url="/"
+			authentication-success-handler-ref="loginHandler"
+		/>
 		<logout />
 
 		<!--
@@ -25,17 +28,16 @@
 		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/login?logout" />
 		-->
 		
+		<!-- 중복로그인 방지 		
+		<session-management invalid-session-url="/login">
+    	    <concurrency-control max-sessions="1" expired-url="/login"/>
+	    </session-management>
+	    -->
 		<!-- enable csrf protection -->
-		<csrf disabled='false'/>  
+		<csrf/>  
 	</http> 
-	
-	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-        <beans:property name="driverClass" value="oracle.jdbc.OracleDriver" />
-        <beans:property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521/JAVA" />
-        <beans:property name="username" value="cham" />
-        <beans:property name="password" value="java" />
-    </beans:bean>
-    
+ 	
+ 	<!-- DB랑 시큐리티 연동 -->
     <authentication-manager>
         <authentication-provider>
             <jdbc-user-service id="userService" data-source-ref="dataSource"
@@ -44,4 +46,9 @@
             />
         </authentication-provider>
     </authentication-manager>
+    
+    <!-- 로그인 후 부가작업 -->
+    <beans:bean id='loginHandler' 
+    	class='bit.spring4.buzbee.util.LoginHandler'>
+    </beans:bean>
 </beans:beans>
