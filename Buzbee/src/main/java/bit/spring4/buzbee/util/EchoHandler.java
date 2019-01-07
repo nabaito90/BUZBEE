@@ -23,8 +23,15 @@ public class EchoHandler extends TextWebSocketHandler {
 	  // 클라이언트가 서버로 메시지를 전송했을 때 실행되는 메소드
 	  @Override
 	  protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-	    logger.info("{}로 부터 {} 받음", session.getPrincipal().getName(), message.getPayload());
+		String msg = message.getPayload();
+	    logger.info("{}로 부터 {} 받음", session.getPrincipal().getName(), msg);
 	    for (WebSocketSession sess : sessionList) {
+	      if(message.getPayload().contains("@")) {
+	    	  String[] id = msg.split("@");
+	    	  for(String a : id) {
+	    		  System.out.println(a);
+	    	  }
+	      }
 	      sess.sendMessage(new TextMessage(session.getPrincipal().getName() + " : " + message.getPayload()));
 	    }
 	  }

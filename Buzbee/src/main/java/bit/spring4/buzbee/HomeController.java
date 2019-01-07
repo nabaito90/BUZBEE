@@ -1,4 +1,4 @@
-/*
+
 package bit.spring4.buzbee;
 
 import java.security.Principal;
@@ -11,17 +11,8 @@ import bit.spring4.buzbee.util.TrendCrawler;
 @Controller
 public class HomeController {
 	
-	@RequestMapping(value = "/")
-	public ModelAndView home(Principal principal) {
-		ModelAndView mv = new ModelAndView();
-		if(principal == null) {
-			mv.setViewName("redirect:login");
-			return mv;
-		}
-		
-		mv.setViewName("board/board");
-		mv.addObject("list", new TrendCrawler().getTIOBEs("item"));
-		return mv;
+	@RequestMapping(value = "/test/home")
+	public ModelAndView home() {
+		return new ModelAndView("websocket-echo", "list", new TrendCrawler().getTIOBEs("item"));
 	}
 }
-*/
