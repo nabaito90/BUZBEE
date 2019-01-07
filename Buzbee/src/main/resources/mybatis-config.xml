@@ -5,10 +5,13 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Member" type='bit.spring4.buzbee.model.Member'/>
+		<typeAlias alias="Board" type='bit.spring4.buzbee.model.Board'/>
+		<typeAlias alias="MemberAndBoard" type='bit.spring4.buzbee.model.MemberAndBoard'/>
 		<!-- append -->
 	</typeAliases>
 	<mappers>
 		<mapper resource='mybatis/Member.xml'></mapper>
+		<mapper resource='mybatis/Board.xml'></mapper>
 		<!-- append -->
 	</mappers>
 </configuration>
