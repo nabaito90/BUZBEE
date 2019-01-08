@@ -9,4 +9,5 @@ public interface LoginDAO {
 	Member selectByPhone(String phone);
 	Member selectByEmail(String email);
 	Member selectById(String id);
+	long selectM_NOById(String id);
 }

@@ -1,9 +1,9 @@
 package bit.spring4.buzbee.board.model.service;
 
-import java.security.Principal;
-import bit.spring4.buzbee.model.Member;
+import java.util.List;
+import bit.spring4.buzbee.model.MemberAndBoard;
 
 public interface BoardService {
-	Member selectByIdService(Principal principal);
-	Member selectByIdService(String id);
+	List<MemberAndBoard> selectByIdService(String id);
+	boolean insertService(long m_no, String b_content);
 }
