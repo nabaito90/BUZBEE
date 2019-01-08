@@ -69,7 +69,6 @@
 		
 		// 서버로부터 메시지를 받았을 때
 		function onMessage(msg) {
-			$("#empty-buzzing").remove();
 			var data = msg.data;
 			data = data.substring(data.indexOf(":") + 1);
 			var html = '<div class="media">'+
@@ -449,26 +448,85 @@
 					</div>
 				</div>
 				<div class="panel-body" id='buz'>
-				<c:if test='${empty buzzing}'>
-					<div id='empty-buzzing' class='text-center'>아직 작성한 버징이 없습니다. 새로운 버징을 작성해주세요!</div>
-				</c:if>
-				<c:forEach items='${buzzing}' var='buzz'>
 					<div class="media">
 						<a class="media-left" href="#fake">
 							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
 						</a>
 						<div class="media-body">
-							<h4 class="media-heading">${buzz.m_name} <a href='${buzz.m_id}'>@${buzz.m_id}</a></h4>
-							<p>${buzz.b_content}</p>
+							<h4 class="media-heading">@moon</h4>
+							<p>배고프다</p>
 							<ul class="nav nav-pills nav-pills-custom">
 								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-retweet">&nbsp;${buzz.b_rebuz}</span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-star">&nbsp;${buzz.b_like}</span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
 								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
 							</ul>
 						</div>
 					</div>
-				</c:forEach>
+
+					<div class="media">
+						<a class="media-left" href="#fake">
+							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading</h4>
+							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
+							<ul class="nav nav-pills nav-pills-custom">
+								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="media">
+						<a class="media-left" href="#fake">
+							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading</h4>
+							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
+							<ul class="nav nav-pills nav-pills-custom">
+								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="media">
+						<a class="media-left" href="#fake">
+							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading</h4>
+							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
+							<ul class="nav nav-pills nav-pills-custom">
+								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+							</ul>
+						</div>
+					</div>
+					
+					<div class="media">
+						<a class="media-left" href="#fake">
+							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Media heading</h4>
+							<p>Dolorem aspernatur rerum, iure? Culpa iste aperiam sequi, fuga, quasi rerum, eum, quo natus tenetur officia placeat.</p>
+							<ul class="nav nav-pills nav-pills-custom">
+								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -10,12 +10,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import bit.spring4.buzbee.login.model.dao.LoginDAO;
+import bit.spring4.buzbee.board.model.dao.BoardDAO;
 import bit.spring4.buzbee.model.Member;
 
 public class LoginHandler implements AuthenticationSuccessHandler {
 	@Autowired
-	private LoginDAO dao;
+	private BoardDAO dao;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,

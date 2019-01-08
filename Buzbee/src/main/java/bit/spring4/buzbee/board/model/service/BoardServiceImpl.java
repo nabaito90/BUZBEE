@@ -1,11 +1,12 @@
 package bit.spring4.buzbee.board.model.service;
 
-import java.util.List;
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import bit.spring4.buzbee.board.model.dao.BoardDAO;
-import bit.spring4.buzbee.model.Board;
-import bit.spring4.buzbee.model.MemberAndBoard;
+import bit.spring4.buzbee.model.Member;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -13,15 +14,13 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO dao;
 	
 	@Override
-	public List<MemberAndBoard> selectByIdService(String id) {
+	public Member selectByIdService(Principal principal) {
+		String id = principal.getName();
 		return dao.selectById(id);
 	}
 	
 	@Override
-	public boolean insertService(long m_no, String b_content) {
-		Board board = new Board();
-		board.setM_no(m_no);
-		board.setB_content(b_content);
-		return dao.insert(board);
+	public Member selectByIdService(String id) {
+		return dao.selectById(id);
 	}
 }
