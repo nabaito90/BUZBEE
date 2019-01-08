@@ -130,12 +130,15 @@
 </head>
 
 <body>
+  <div class='layer'>
+  <span class='content'>
   <section id="container">
     <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
     <!--header start-->
-    <header class="header black-bg">
+    <header class="header black-bg" id='board-header'>
+      <div id='header-center'>
       <div class="sidebar-toggle-box">
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
@@ -332,6 +335,7 @@
           <li><a class="logout" href="logout">Logout</a></li>
         </ul>
       </div>
+      </div>
     </header>
     <!--header end-->
     <!-- **********************************************************************************************************************************************************
@@ -465,8 +469,8 @@
 
     <section id="main-content">
       <section class="wrapper site-min-height" id='section-body'>
-        <div id='content-area'>
-      <div class="col-sm-9" id='timeline'>
+      <div id='content-area'>
+      <div class="col-xs-9" id='timeline'>
          <div class="panel panel-info">
             <div class="panel-heading">
                <a class="media-left" href="#fake">
@@ -506,7 +510,7 @@
          </div>
       </div>
 
-      <div class="col-sm-3" id='side-nav'>
+      <div class="col-xs-3" id='side-nav'>
          <div class="panel panel-default panel-custom">
             <div class="panel-heading">
                <h3 class="panel-title">
@@ -589,29 +593,11 @@
     </section>
     <!-- /MAIN ë ´ì © -->
     <!--main content end-->
-    <!--footer start-->
-    <footer class="site-footer">
-      <div class="text-center">
-        <p>
-          &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
-        </p>
-        <div class="credits">
-          <!--
-            You are NOT allowed to delete the credit link to TemplateMag with free version.
-            You can delete the credit link only if you bought the pro version.
-            Buy the pro version with working PHP/AJAX contact form: https://templatemag.com/dashio-bootstrap-admin-template/
-            Licensing information: https://templatemag.com/license/
-          -->
-          Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
-        </div>
-        <a href="blank.html#" class="go-top">
-          <i class="fa fa-angle-up"></i>
-          </a>
-      </div>
-    </footer>
-    <!--footer end-->
   </section>
-  
+  <span class="blank"></span>
+  </span>
+  </div>
+  	  
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js" ></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -623,7 +609,6 @@
   <!--common script for all pages-->
   <script src="lib/common-scripts.js"></script>
   <!--script for this page-->
-
 </body>
 
 </html>
