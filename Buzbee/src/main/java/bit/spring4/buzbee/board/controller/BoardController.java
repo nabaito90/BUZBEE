@@ -49,7 +49,7 @@ public class BoardController {
 		}
 		
 		List<MemberAndBoard> buzzing = boardService.selectByIdService(id); 
-		mv.setViewName("board/board");
+		mv.setViewName("profile/profile");
 		mv.addObject("member", member);
 		mv.addObject("buzzing", buzzing);
 		mv.addObject("list", new TrendCrawler().getTIOBEs("item"));

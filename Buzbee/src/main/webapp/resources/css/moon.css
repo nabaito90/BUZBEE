@@ -15,3 +15,7 @@
     width: 80px;
     cursor: pointer;
 }
+#search2{resize:none;}
+#appended{margin-top:10px;}
+.panel-heading{padding-bottom:0}
+.media-body>p{width:100%}

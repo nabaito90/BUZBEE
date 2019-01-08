@@ -27,9 +27,9 @@
   <link href="css/style-responsive.css" rel="stylesheet">
   <!-- jQuery CDN-->
   <script
-	src="https://code.jquery.com/jquery-1.9.0.js"
-	integrity="sha256-TXsBwvYEO87oOjPQ9ifcb7wn3IrrW91dhj6EMEtRLvM="
-	crossorigin="anonymous"></script>
+   src="https://code.jquery.com/jquery-1.9.0.js"
+   integrity="sha256-TXsBwvYEO87oOjPQ9ifcb7wn3IrrW91dhj6EMEtRLvM="
+   crossorigin="anonymous"></script>
   <!-- Web socket CDN -->
   <script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
 
@@ -40,23 +40,49 @@
     License: https://templatemag.com/license/
   ======================================================= -->
     <!-- Web Socket js -->
-	<script type="text/javascript">
+   <script type="text/javascript">
 		$(document).ready(function() {
+			$(document).click(function(e){
+				if (!$(e.target).is('#search2')) {
+					if($(e.target).is('#buzzing')) buzzing();
+					if($("#search2").val().trim().length == 0) {
+						$("#search2").prop("rows", 1)
+						$("#search2").val("");
+						$("#appended").remove();
+					}
+				}
+			});
+			
+			$("#search2").keyup(function(){
+				console.log($("#search2").val().length);
+				if($("#search2").val().trim().length > 0) $('#buzzing').attr("class", "btn btn-warning");
+				else $('#buzzing').attr("class", "btn btn-warning disabled");
+				$('#textCount').html($("#search2").val().length);
+				if($("#search2").val().length > 140) {
+					$('#buzzing').attr("class", "btn btn-warning disabled");
+					$('#textCount').css("color", "red");
+				} else {
+					$('#textCount').css("color", "#31708f");
+				}
+			});				
+			
+			$("#search2").click(function(){
+				$("#search2").prop("rows", 5);
+				$("#appended").remove();
+				$("#inputarea").append("<div id='appended' style='text-align:right'>"+
+									       "<span id='textCount'>"+ $("#search2").val().length +"</span>/140&nbsp;&nbsp;<button id='buzzing' class='btn btn-warning disabled'>버징하기</button>"+
+									   "</div>");
+				if($("#search2").val().length > 140) $('#textCount').css("color", "red");
+			});
+			
 			$("#sendBtn").click(function() {
 				if($("#search2").val().trim() == '') return;
 				sendMessage();
 				$('#search2').val('')
 			});
-		
-			$("#search2").keydown(function(key) {
-				if($("#search2").val().trim() == '') return;
-				if(key.keyCode == 13) {// 엔터
-			       sendMessage();
-			       $('#search2').val('')
-				}
-	  		});
 		});
 		
+		// Web Socket js 
 		// 웹소켓을 지정한 url로 연결한다.
 		let sock = new SockJS("<c:url value="/echo"/>");
 		sock.onmessage = onMessage;
@@ -72,6 +98,7 @@
 			$("#empty-buzzing").remove();
 			var data = msg.data;
 			data = data.substring(data.indexOf(":") + 1);
+			data = data.replace(/\n/gi, "</br>");
 			var html = '<div class="media">'+
 					       '<a class="media-left" href="#fake">'+
 					           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
@@ -92,6 +119,12 @@
 		// 서버와 연결을 끊었을 때
 		function onClose(evt) {
 			$("#buz").append("연결 끊김");
+		}
+		
+		function buzzing() {
+			if($("#search2").val().trim() == '') return;
+			sendMessage();
+			$("#search2").val('');
 		}
 	</script>
 </head>
@@ -428,133 +461,133 @@
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
         *********************************************************************************************************************************************************** -->
-    <!--ë´ì©-->
+    <!--ë ´ì ©-->
 
     <section id="main-content">
       <section class="wrapper site-min-height" id='section-body'>
         <div id='content-area'>
-		<div class="col-sm-9" id='timeline'>
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<a class="media-left" href="#fake">
-						<img alt="" class="media-object img-rounded" src="http://placehold.it/35x35">
-					</a>
-					<div class="media-body">
-						<div class="form-group has-feedback">
-							<label class="control-label sr-only" for="inputSuccess5">Hidden label</label>
-							<input type="text" class="form-control" id="search2" aria-describedby="search">
-							<span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true"></span>
-							<span id="search2" class="sr-only">(success)</span>
-						</div>
-					</div>
-				</div>
-				<div class="panel-body" id='buz'>
-				<c:if test='${empty buzzing}'>
-					<div id='empty-buzzing' class='text-center'>아직 작성한 버징이 없습니다. 새로운 버징을 작성해주세요!</div>
-				</c:if>
-				<c:forEach items='${buzzing}' var='buzz'>
-					<div class="media">
-						<a class="media-left" href="#fake">
-							<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
-						</a>
-						<div class="media-body">
-							<h4 class="media-heading">${buzz.m_name} <a href='${buzz.m_id}'>@${buzz.m_id}</a></h4>
-							<p>${buzz.b_content}</p>
-							<ul class="nav nav-pills nav-pills-custom">
-								<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-retweet">&nbsp;${buzz.b_rebuz}</span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-star">&nbsp;${buzz.b_like}</span></a></li>
-								<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
-							</ul>
-						</div>
-					</div>
-				</c:forEach>
-				</div>
-			</div>
-		</div>
+      <div class="col-sm-9" id='timeline'>
+         <div class="panel panel-info">
+            <div class="panel-heading">
+               <a class="media-left" href="#fake">
+                  <img alt="" class="media-object img-rounded" src="http://placehold.it/35x35">
+               </a>
+               <div class="media-body">
+                  <div class="form-group has-feedback" id='inputarea'>
+                     <label class="control-label sr-only" for="inputSuccess5">Hidden label</label>
+                     <textarea class="form-control" id="search2" aria-describedby="search" placeholder='지금 무슨 일이 일어나고 있나요?' rows='1'></textarea>
+                     <span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true" ></span>
+                     <!--<span id="search2" class="sr-only">(success)</span> -->
+                  </div>
+               </div>
+            </div>
+            <div class="panel-body" id='buz'>
+            <c:if test='${empty buzzing}'>
+               <div id='empty-buzzing' class='text-center'>아직 작성한 버징이 없습니다. 새로운 버징을 작성해주세요!</div>
+            </c:if>
+            <c:forEach items='${buzzing}' var='buzz'>
+               <div class="media">
+                  <a class="media-left" href="#fake">
+                     <img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
+                  </a>
+                  <div class="media-body">
+                     <h4 class="media-heading">${buzz.m_name} <a href='${buzz.m_id}'>@${buzz.m_id}</a></h4>
+                     <p>${buzz.b_content}</p>
+                     <ul class="nav nav-pills nav-pills-custom">
+                        <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-retweet">&nbsp;${buzz.b_rebuz}</span></a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-star">&nbsp;${buzz.b_like}</span></a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
+                     </ul>
+                  </div>
+               </div>
+            </c:forEach>
+            </div>
+         </div>
+      </div>
 
-		<div class="col-sm-3" id='side-nav'>
-			<div class="panel panel-default panel-custom">
-				<div class="panel-heading">
-					<h3 class="panel-title">
-						Who to follow
-						<small><a href="#">Refresh</a> â <a href="#">View all</a></small>
-					</h3>
-				</div>
-				<div class="panel-body">
-					<div class="media">
-						<div class="media-left">
-							<img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
-						</div>
-						<div class="media-body">
-							<h4 class="media-heading">Nome e cognome</h4>
-							<a href="#" class="btn btn-default btn-xs">
-								+
-								<span class="glyphicon glyphicon-user"></span>
-								Follow
-							</a>
-						</div>
-					</div>
-					<div class="media">
-						<div class="media-left">
-							<img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
-						</div>
-						<div class="media-body">
-							<h4 class="media-heading">Nome e cognome</h4>
-							<a href="#" class="btn btn-default btn-xs">
-								+
-								<span class="glyphicon glyphicon-user"></span>
-								Follow
-							</a>
-						</div>
-					</div>
-					<div class="media">
-						<div class="media-left">
-							<img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
-						</div>
-						<div class="media-body">
-							<h4 class="media-heading">Nome e cognome</h4>
-							<a href="#" class="btn btn-default btn-xs">
-								+
-								<span class="glyphicon glyphicon-user"></span>
-								Follow
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="panel-footer">
-					<a href="www.google.it">
-						<span class="glyphicon glyphicon-user"></span>
-						Find people you know
-					</a>
-				</div>
-			</div>
-			<div class="well well-sm">
-				<ul class="list-inline">
-					<li>Â© 2015 Twitter</li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Help</a></li>
-					<li><a href="#">Terms</a></li>
-					<li><a href="#">Privacy</a></li>
-					<li><a href="#">Cookies</a></li>
-					<li><a href="#">Ads info</a></li>
-					<li><a href="#">Brand</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Status</a></li>
-					<li><a href="#">Apps</a></li>
-					<li><a href="#">Jobs</a></li>
-					<li><a href="#">Advertise</a></li>
-					<li><a href="#">Businesses</a></li>
-					<li><a href="#">Media</a></li>
-					<li><a href="#">Developers</a></li>
-				</ul>
-			</div>
-		</div>        
+      <div class="col-sm-3" id='side-nav'>
+         <div class="panel panel-default panel-custom">
+            <div class="panel-heading">
+               <h3 class="panel-title">
+                  Who to follow
+                  <small><a href="#">Refresh</a> â   <a href="#">View all</a></small>
+               </h3>
+            </div>
+            <div class="panel-body">
+               <div class="media">
+                  <div class="media-left">
+                     <img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
+                  </div>
+                  <div class="media-body">
+                     <h4 class="media-heading">Nome e cognome</h4>
+                     <a href="#" class="btn btn-default btn-xs">
+                        +
+                        <span class="glyphicon glyphicon-user"></span>
+                        Follow
+                     </a>
+                  </div>
+               </div>
+               <div class="media">
+                  <div class="media-left">
+                     <img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
+                  </div>
+                  <div class="media-body">
+                     <h4 class="media-heading">Nome e cognome</h4>
+                     <a href="#" class="btn btn-default btn-xs">
+                        +
+                        <span class="glyphicon glyphicon-user"></span>
+                        Follow
+                     </a>
+                  </div>
+               </div>
+               <div class="media">
+                  <div class="media-left">
+                     <img src="http://placehold.it/32x32" alt="" class="media-object img-rounded">
+                  </div>
+                  <div class="media-body">
+                     <h4 class="media-heading">Nome e cognome</h4>
+                     <a href="#" class="btn btn-default btn-xs">
+                        +
+                        <span class="glyphicon glyphicon-user"></span>
+                        Follow
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="panel-footer">
+               <a href="www.google.it">
+                  <span class="glyphicon glyphicon-user"></span>
+                  Find people you know
+               </a>
+            </div>
+         </div>
+         <div class="well well-sm">
+            <ul class="list-inline">
+               <li>Â© 2015 Twitter</li>
+               <li><a href="#">About</a></li>
+               <li><a href="#">Help</a></li>
+               <li><a href="#">Terms</a></li>
+               <li><a href="#">Privacy</a></li>
+               <li><a href="#">Cookies</a></li>
+               <li><a href="#">Ads info</a></li>
+               <li><a href="#">Brand</a></li>
+               <li><a href="#">Blog</a></li>
+               <li><a href="#">Status</a></li>
+               <li><a href="#">Apps</a></li>
+               <li><a href="#">Jobs</a></li>
+               <li><a href="#">Advertise</a></li>
+               <li><a href="#">Businesses</a></li>
+               <li><a href="#">Media</a></li>
+               <li><a href="#">Developers</a></li>
+            </ul>
+         </div>
+      </div>        
         </div>
       </section>
       <!-- /wrapper -->
     </section>
-    <!-- /MAIN ë´ì© -->
+    <!-- /MAIN ë ´ì © -->
     <!--main content end-->
     <!--footer start-->
     <footer class="site-footer">

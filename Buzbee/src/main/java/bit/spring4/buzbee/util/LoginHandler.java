@@ -20,9 +20,9 @@ public class LoginHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		Member loginDTO = dao.selectById(authentication.getName());
+		Member loginInfo = dao.selectById(authentication.getName());
 		HttpSession session = request.getSession();
-		session.setAttribute("loginInfo", loginDTO);
+		session.setAttribute("loginInfo", loginInfo);
 		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 		redirectStrategy.sendRedirect(request, response, "/");
 	}
