@@ -10,8 +10,8 @@
 		<result property='m_email' column='M_EMAIL'></result>
 		<result property='m_phone' column='M_PHONE'></result>
 		<result property='m_password' column='M_PASSWORD'></result>
-		<result property='f_no' column='F_NO'></result>
-		<result property='f_no2' column='F_NO2'></result>
+		<result property='m_profile' column='M_PROFILE'></result>
+		<result property='m_header' column='M_HEADER'></result>
 		<result property='m_delete' column='M_DELETE'></result>
 		<result property='m_rdate' column='M_RDATE'></result>
 	</resultMap>
@@ -19,5 +19,9 @@
 	<select id='selectById' parameterType='String' resultType='Member'>
 		select * from MEMBER where M_ID=#{id}
 	</select>	
+	
+	<select id='selectM_NOById' parameterType='String' resultType='long'>
+		select M_NO from MEMBER where M_ID=#{id}
+	</select>
 	<!-- append -->
 </mapper>

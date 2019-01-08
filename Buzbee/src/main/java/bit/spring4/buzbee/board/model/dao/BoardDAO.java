@@ -1,7 +1,10 @@
 package bit.spring4.buzbee.board.model.dao;
 
-import bit.spring4.buzbee.model.Member;
+import java.util.List;
+import bit.spring4.buzbee.model.Board;
+import bit.spring4.buzbee.model.MemberAndBoard;
 
 public interface BoardDAO {
-	Member selectById(String id);
+	List<MemberAndBoard> selectById(String id);
+	boolean insert(Board board);
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='bit.spring4.buzbee.model.Board'>
+	<resultMap type="Board" id="boardResult">
+		<result property='b_no' column='B_NO'></result>
+		<result property='m_no' column='M_NO'></result>
+		<result property='f_no' column='F_NO'></result>
+		<result property='b_content' column='B_CONTENT'></result>
+		<result property='b_rebuz' column='B_REBUZ'></result>
+		<result property='b_like' column='B_LIKE'></result>
+		<result property='b_ref' column='B_REF'></result>
+		<result property='b_rdate' column='B_RDATE'></result>
+	</resultMap>
+	
+	<select id='selectById' parameterType='String' resultType='MemberAndBoard'>
+		select * from BOARD B, MEMBER M where M.M_ID=#{id} and B.M_NO = M.M_NO order by B.B_RDATE desc
+	</select>
+	
+	<insert id='insert' parameterType='Board'>
+		insert into BOARD values(BOARD_SEQ.nextval, #{m_no}, null, #{b_content}, 0, 0, BOARD_SEQ.currval, SYSDATE)
+	</insert>
+	<!-- append -->
+</mapper>
