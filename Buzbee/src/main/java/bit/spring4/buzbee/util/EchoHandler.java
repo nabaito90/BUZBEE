@@ -1,24 +1,17 @@
 package bit.spring4.buzbee.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import bit.spring4.buzbee.board.model.service.BoardService;
-import bit.spring4.buzbee.login.model.service.LoginService;
-
 public class EchoHandler extends TextWebSocketHandler {
 	  private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
 	  private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-	  @Autowired
-	  private BoardService boardService;
-	  @Autowired
-	  private LoginService loginService;
 	 
 	  // 클라이언트와 연결 이후에 실행되는 메소드
 	  @Override
@@ -32,10 +25,13 @@ public class EchoHandler extends TextWebSocketHandler {
 	  protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String msg = message.getPayload();
 	    logger.info("{}로 부터 {} 받음", session.getPrincipal().getName(), msg);
-
-	    long m_no = loginService.selectM_NOByIdService(session.getPrincipal().getName());
-	    boardService.insertService(m_no, msg);
 	    for (WebSocketSession sess : sessionList) {
+	      if(message.getPayload().contains("@")) {
+	    	  String[] id = msg.split("@");
+	    	  for(String a : id) {
+	    		  System.out.println(a);
+	    	  }
+	      }
 	      sess.sendMessage(new TextMessage(session.getPrincipal().getName() + " : " + message.getPayload()));
 	    }
 	  }
