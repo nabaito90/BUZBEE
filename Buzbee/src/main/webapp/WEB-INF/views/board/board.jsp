@@ -12,13 +12,21 @@
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
   <title>Dashio - Bootstrap Admin Template</title>
-
+	
+   
+  
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
   <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Bootstrap core CSS -->
   <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+  
+  <!--가져온 거 -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css'>
+  
   <!--external css-->
   <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <!-- Custom styles for this template -->
@@ -55,11 +63,11 @@
 			
 			$("#search2").keyup(function(){
 				console.log($("#search2").val().length);
-				if($("#search2").val().trim().length > 0) $('#buzzing').attr("class", "btn btn-warning");
-				else $('#buzzing').attr("class", "btn btn-warning disabled");
+				if($("#search2").val().trim().length > 0) $('#buzzing').attr("class", "btn btn-search-bar");
+				else $('#buzzing').attr("class", "btn btn-search-bar disabled");
 				$('#textCount').html($("#search2").val().length);
 				if($("#search2").val().length > 140) {
-					$('#buzzing').attr("class", "btn btn-warning disabled");
+					$('#buzzing').attr("class", "btn btn-search-bar disabled");
 					$('#textCount').css("color", "red");
 				} else {
 					$('#textCount').css("color", "#31708f");
@@ -70,9 +78,12 @@
 				$("#search2").prop("rows", 5);
 				$("#appended").remove();
 				$("#inputarea").append("<div id='appended' style='text-align:right'>"+
-									       "<span id='textCount'>"+ $("#search2").val().length +"</span>/140&nbsp;&nbsp;<button id='buzzing' class='btn btn-warning disabled'>버징하기</button>"+
+									       "<span id='textCount'>"+ $("#search2").val().length +"</span>/140&nbsp;&nbsp;<button id='buzzing' class='btn btn-search-bar disabled'>버징하기</button>"+
 									   "</div>");
 				if($("#search2").val().length > 140) $('#textCount').css("color", "red");
+				else if($("#search2").val().trim().length > 0) {
+					$('#buzzing').attr("class", "btn btn-search-bar");										
+				}
 			});
 			
 			$("#sendBtn").click(function() {
@@ -127,6 +138,7 @@
 			$("#search2").val('');
 		}
 	</script>
+ 
 </head>
 
 <body>
@@ -137,329 +149,124 @@
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
     <!--header start-->
-    <header class="header black-bg" id='board-header'>
-      <div id='header-center'>
-      <div class="sidebar-toggle-box">
-        <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
-      </div>
-      <!--logo start-->
-      <a href="index.html" class="logo"><b>DASH<span>IO</span></b></a>
-      <!--logo end-->
-      <div class="nav notify-row" id="top_menu">
-        <!--  notification start -->
-        <ul class="nav top-menu">
-          <!-- settings start -->
-          <li class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-              <i class="fa fa-tasks"></i>
-              <span class="badge bg-theme">4</span>
-              </a>
-            <ul class="dropdown-menu extended tasks-bar">
-              <div class="notify-arrow notify-arrow-green"></div>
-              <li>
-                <p class="green">You have 4 pending tasks</p>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <div class="task-info">
-                    <div class="desc">Dashio Admin Panel</div>
-                    <div class="percent">40%</div>
-                  </div>
-                  <div class="progress progress-striped">
-                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <div class="task-info">
-                    <div class="desc">Database Update</div>
-                    <div class="percent">60%</div>
-                  </div>
-                  <div class="progress progress-striped">
-                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                      <span class="sr-only">60% Complete (warning)</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <div class="task-info">
-                    <div class="desc">Product Development</div>
-                    <div class="percent">80%</div>
-                  </div>
-                  <div class="progress progress-striped">
-                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                      <span class="sr-only">80% Complete</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <div class="task-info">
-                    <div class="desc">Payments Sent</div>
-                    <div class="percent">70%</div>
-                  </div>
-                  <div class="progress progress-striped">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                      <span class="sr-only">70% Complete (Important)</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-              <li class="external">
-                <a href="#">See All Tasks</a>
-              </li>
-            </ul>
-          </li>
-          <!-- settings end -->
-          <!-- inbox dropdown start-->
-          <li id="header_inbox_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-              <i class="fa fa-envelope-o"></i>
-              <span class="badge bg-theme">5</span>
-              </a>
-            <ul class="dropdown-menu extended inbox">
-              <div class="notify-arrow notify-arrow-green"></div>
-              <li>
-                <p class="green">You have 5 new messages</p>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="photo"><img alt="avatar" src="img/ui-zac.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Zac Snider</span>
-                  <span class="time">Just now</span>
-                  </span>
-                  <span class="message">
-                  Hi mate, how is everything?
-                  </span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="photo"><img alt="avatar" src="img/ui-divya.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Divya Manian</span>
-                  <span class="time">40 mins.</span>
-                  </span>
-                  <span class="message">
-                  Hi, I need your help with this.
-                  </span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="photo"><img alt="avatar" src="img/ui-danro.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Dan Rogers</span>
-                  <span class="time">2 hrs.</span>
-                  </span>
-                  <span class="message">
-                  Love your new Dashboard.
-                  </span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="photo"><img alt="avatar" src="img/ui-sherman.jpg"></span>
-                  <span class="subject">
-                  <span class="from">Dj Sherman</span>
-                  <span class="time">4 hrs.</span>
-                  </span>
-                  <span class="message">
-                  Please, answer asap.
-                  </span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">See all messages</a>
-              </li>
-            </ul>
-          </li>
-          <!-- inbox dropdown end -->
-          <!-- notification dropdown start-->
-          <li id="header_notification_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-              <i class="fa fa-bell-o"></i>
-              <span class="badge bg-warning">7</span>
-              </a>
-            <ul class="dropdown-menu extended notification">
-              <div class="notify-arrow notify-arrow-yellow"></div>
-              <li>
-                <p class="yellow">You have 7 new notifications</p>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                  Server Overloaded.
-                  <span class="small italic">4 mins.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                  Memory #2 Not Responding.
-                  <span class="small italic">30 mins.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                  Disk Space Reached 85%.
-                  <span class="small italic">2 hrs.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">
-                  <span class="label label-success"><i class="fa fa-plus"></i></span>
-                  New User Registered.
-                  <span class="small italic">3 hrs.</span>
-                  </a>
-              </li>
-              <li>
-                <a href="index.html#">See all notifications</a>
-              </li>
-            </ul>
-          </li>
-          <!-- notification dropdown end -->
-        </ul>
-        <!--  notification end -->
-      </div>
-      <div class="top-menu">
-        <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="logout">Logout</a></li>
-        </ul>
-      </div>
-      </div>
-    </header>
+    <!-- Fixed top navbar -->
+	<nav class="navbar navbar-toggleable-md fixed-top" id='board-header'>
+	  	<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    
+	<div id='top-logo'>
+	<!--logo start-->
+	    <a href="" class="logo"><b style="color:#404040">Buz<span style="color:rgb(251, 208, 67)">bee</span></b></a>
+	<!--logo end-->
+	</div>
+	
+	<!--  버즈비 로고 -->
+	   	<a href=''><div id="logo"><img src="resources/img/fi.png"></div></a>
+	<!--  버즈비 로고 -->
+	
+	  <div class="collapse navbar-collapse container" id='header-notice'>
+	    <!-- Navbar navigation links -->
+	    <ul class="navbar-nav mr-auto" id='menus'>
+	      <li class="nav-item active">
+	      <li class="nav-item">
+	        <a class="nav-link" href="#"><i class="octicon octicon-bell"></i> Notifications</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#"><i class="octicon octicon-inbox"></i> Messages</a>
+	      </li>
+	    </ul>
+	    <!-- END: Navbar navigation links -->
+	
+	    <!-- 검색창 -->
+	    <form class="navbar-form" role="search" action=''>
+	      <div class="input-group">
+	        <input type="text" class="form-control input-search" placeholder="Search Buzbee" name="srch-term" id="srch-term">
+	        <div class="input-group-btn">
+	          <button class="btn btn-default btn-search" type="submit"><i class="octicon octicon-search navbar-search-icon"></i></button>
+	        </div>
+	      </div>
+	    </form>
+	    <!-- END: 검색창 -->
+	    
+	    <!-- 프로필 사진 -->
+	    <div class="dropdown navbar-user-dropdown">
+	      <button class="btn btn-secondary dropdown-toggle btn-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+	      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	        <a class="dropdown-item" href="#">Action</a>
+	        <a class="dropdown-item" href="#">Another action</a>
+	        <a class="dropdown-item" href="#">Something else here</a>
+	      </div>
+	    </div>
+	    <!-- END:프로필 사진  -->
+	    
+	    <!-- 버징 버튼 -->
+	    <button class="btn btn-search-bar">버징하기</button>
+	  </div>
+	</nav>
+    
     <!--header end-->
     <!-- **********************************************************************************************************************************************************
         MAIN SIDEBAR MENU
         *********************************************************************************************************************************************************** -->
     <!--sidebar start-->
-    <aside>
+    
+     <aside>
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="profile.html"><img src="img/ui-sam.jpg" class="img-circle" width="80"></a></p>
-          <h5 class="centered">${member.m_name}</h5>
-          <h5 class="centered">@${member.m_id}</h5>
+          <p class="centered"><a href="view/profile"><img src="resources/img/mb.png" class="img-circle" width='180'></a></p>
+          <h5 class="centered" style="color:#404040; font-weight:bold">Moon bee</h5>
+          <h5 class="centered" style="color:#b3b3b3">@아이디</h5>
           <li class="mt">
             <a href="index.html">
-              <i class="fa fa-dashboard"></i>
-              <span>Dashboard</span>
+              <i class="fa fa-Buzzing"></i>
+              <span style="color:#404040; font-weight:bold">버징</span>
+              <span class="label label-theme pull-right mail-info">5</span>
               </a>
           </li>
-          <li class="sub-menu">
-            <a href="javascript:;">
-              <i class="fa fa-desktop"></i>
-              <span>UI Elements</span>
-              </a>
-            <ul class="sub">
-              <li><a href="general.html">General</a></li>
-              <li><a href="buttons.html">Buttons</a></li>
-              <li><a href="panels.html">Panels</a></li>
-              <li><a href="font_awesome.html">Font Awesome</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;">
-              <i class="fa fa-cogs"></i>
-              <span>Components</span>
-              </a>
-            <ul class="sub">
-              <li><a href="grids.html">Grids</a></li>
-              <li><a href="calendar.html">Calendar</a></li>
-              <li><a href="gallery.html">Gallery</a></li>
-              <li><a href="todo_list.html">Todo List</a></li>
-              <li><a href="dropzone.html">Dropzone File Upload</a></li>
-              <li><a href="inline_editor.html">Inline Editor</a></li>
-              <li><a href="file_upload.html">Multiple File Upload</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a class="active" href="javascript:;">
-              <i class="fa fa-book"></i>
-              <span>Extra Pages</span>
-              </a>
-            <ul class="sub">
-              <li class="active"><a href="blank.html">Blank Page</a></li>
-              <li><a href="login.html">Login</a></li>
-              <li><a href="lock_screen.html">Lock Screen</a></li>
-              <li><a href="profile.html">Profile</a></li>
-              <li><a href="invoice.html">Invoice</a></li>
-              <li><a href="pricing_table.html">Pricing Table</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="404.html">404 Error</a></li>
-              <li><a href="500.html">500 Error</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;">
-              <i class="fa fa-tasks"></i>
-              <span>Forms</span>
-              </a>
-            <ul class="sub">
-              <li><a href="form_component.html">Form Components</a></li>
-              <li><a href="advanced_form_components.html">Advanced Components</a></li>
-              <li><a href="form_validation.html">Form Validation</a></li>
-              <li><a href="contactform.html">Contact Form</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;">
-              <i class="fa fa-th"></i>
-              <span>Data Tables</span>
-              </a>
-            <ul class="sub">
-              <li><a href="basic_table.html">Basic Table</a></li>
-              <li><a href="responsive_table.html">Responsive Table</a></li>
-              <li><a href="advanced_table.html">Advanced Table</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="inbox.html">
-              <i class="fa fa-envelope"></i>
-              <span>Mail </span>
-              <span class="label label-theme pull-right mail-info">2</span>
+          
+          <li class="mt">
+            <a href="index.html">
+              <i class="fa fa-Buzzing"></i>
+              <span style="color:#404040; font-weight:bold">팔로잉</span>
+              <span class="label label-theme pull-right mail-info">9</span>
               </a>
           </li>
-          <li class="sub-menu">
-            <a href="javascript:;">
-              <i class=" fa fa-bar-chart-o"></i>
-              <span>Charts</span>
-              </a>
-            <ul class="sub">
-              <li><a href="morris.html">Morris</a></li>
-              <li><a href="chartjs.html">Chartjs</a></li>
-              <li><a href="flot_chart.html">Flot Charts</a></li>
-              <li><a href="xchart.html">xChart</a></li>
-            </ul>
-          </li>
-          <li class="sub-menu">
-            <a href="javascript:;">
-              <i class="fa fa-comments-o"></i>
-              <span>Chat Room</span>
-              </a>
-            <ul class="sub">
-              <li><a href="lobby.html">Lobby</a></li>
-              <li><a href="chat_room.html"> Chat Room</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="google_maps.html">
-              <i class="fa fa-map-marker"></i>
-              <span>Google Maps </span>
+          
+           <li class="mt">
+            <a href="index.html">
+              <i class="fa fa-Buzzing"></i>
+              <span style="color:#404040; font-weight:bold">팔로워</span>
+              <span class="label label-theme pull-right mail-info">8</span>
               </a>
           </li>
-        </ul>
+          
+           <li class="mt">
+            <a href="index.html">
+              <i class="fa fa-Buzzing"></i>
+              <span style="color:#404040; font-weight:bold">좋아요</span>
+              <span class="label label-theme pull-right mail-info">10</span>
+              </a>
+          </li>          
+
+
+          <li class="mt">
+            <a href="index.html">
+              <i class="fa fa-Buzzing"></i>
+              <span style="color:#404040; font-weight:bold">설정</span>
+              </a>
+          </li>                             
+
+          <li class="mt">
+            <a href="index.html">
+              <i class="fa fa-Buzzing"></i>
+              <span style="color:#404040; font-weight:bold">로그아웃</span>
+              </a>
+          </li>
         <!-- sidebar menu end-->
       </div>
+           </center>
     </aside>
     <!--sidebar end-->
     <!-- **********************************************************************************************************************************************************
@@ -470,9 +277,9 @@
     <section id="main-content">
       <section class="wrapper site-min-height" id='section-body'>
       <div id='content-area'>
-      <div class="col-xs-9" id='timeline'>
-         <div class="panel panel-info">
-            <div class="panel-heading">
+      <div class="col-lg-9" id='timeline'>
+         <div class="panel panel-info" id='content-border'>
+            <div class="panel-heading" id='input-form'>
                <a class="media-left" href="#fake">
                   <img alt="" class="media-object img-rounded" src="http://placehold.it/35x35">
                </a>

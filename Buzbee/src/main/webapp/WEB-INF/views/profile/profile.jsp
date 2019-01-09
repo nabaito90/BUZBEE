@@ -83,12 +83,15 @@
 </head>
 
 <body>
+  <div class='layer'>
+  <span class='content'>
   <section id="container">
     <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
     <!--header start-->
-    <header class="header black-bg">
+    <header class="header black-bg" id='board-header'>
+    <div id='header-center'>
       <div class="sidebar-toggle-box">
         <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
       </div>
@@ -285,6 +288,7 @@
           <li><a class="logout" href="login.html">Logout</a></li>
         </ul>
       </div>
+    </div>
     </header>
     <!--header end-->
     <!-- **********************************************************************************************************************************************************
@@ -562,6 +566,8 @@
     </footer>
     <!--footer end-->
   </section>
+  </span>
+  </div>
   
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js" ></script>
