@@ -23,5 +23,23 @@
 	<select id='selectM_NOById' parameterType='String' resultType='long'>
 		select M_NO from MEMBER where M_ID=#{id}
 	</select>
+	
+	<!-- for Security -->
+	<select id='customLogin' parameterType='String' resultType='MemberAndAuth'>
+		select 
+			M.M_ID as username,
+			M.M_NO,
+			M.M_NAME,
+			M.M_EMAIL,
+			M.M_PHONE,
+			M.M_PASSWORD as password,
+			M.M_PROFILE,
+			M.M_HEADER,
+			M.M_DELETE,
+			M.M_RDATE,
+			A.A_ENABLED as enabled,
+			A.A_AUTH as authority			
+		from MEMBER M, AUTHORITY A where M.M_ID=#{m_id} and M.M_NO = A.M_NO and M.M_ID=#{m_id}
+	</select>
 	<!-- append -->
 </mapper>

@@ -115,7 +115,7 @@
 					           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
 					       '</a>'+
 					       '<div class="media-body">'+
-					            '<h4 class="media-heading">${loginInfo.m_name} <a href="${loginInfo.m_id}">@${loginInfo.m_id}</a></h4><p>' + data + '</p>'+
+					            '<h4 class="media-heading">${loginDTO.m_name} <a href="${loginDTO.username}">@${loginDTO.username}</a></h4><p>' + data + '</p>'+
 					            '<ul class="nav nav-pills nav-pills-custom">'+
 					                '<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>'+
 					                '<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>'+
@@ -215,9 +215,9 @@
       <div id="sidebar" class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="view/profile"><img src="resources/img/mb.png" class="img-circle" width='180'></a></p>
-          <h5 class="centered" style="color:#404040; font-weight:bold">Moon bee</h5>
-          <h5 class="centered" style="color:#b3b3b3">@아이디</h5>
+          <p class="centered"><a href="profile"><img src="resources/img/mb.png" class="img-circle" width='180'></a></p>
+          <h5 class="centered" style="color:#404040; font-weight:bold">${loginDTO.m_name}</h5>
+          <h5 class="centered" style="color:#b3b3b3">@${loginDTO.username}</h5>
           <li class="mt">
             <a href="index.html">
               <i class="fa fa-Buzzing"></i>
@@ -259,7 +259,7 @@
           </li>                             
 
           <li class="mt">
-            <a href="index.html">
+            <a href="logout">
               <i class="fa fa-Buzzing"></i>
               <span style="color:#404040; font-weight:bold">로그아웃</span>
               </a>

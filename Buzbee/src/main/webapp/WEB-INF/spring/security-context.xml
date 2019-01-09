@@ -10,7 +10,6 @@
 		<access-denied-handler error-page="/denied.do"/>
 		<form-login 
 			default-target-url="/"
-			authentication-success-handler-ref="loginHandler"
 		/>
 		<logout />
 
@@ -35,19 +34,8 @@
 		<!-- enable csrf protection -->
 		<csrf/>  
 	</http> 
- 	
  	<!-- DB랑 시큐리티 연동 -->
-    <authentication-manager>
-        <authentication-provider>
-            <jdbc-user-service id="userService" data-source-ref="dataSource"
-                users-by-username-query="select M.M_ID as username, M.M_PASSWORD as password, A.A_ENABLED as enabled from MEMBER M, AUTHORITY A where M.M_NO=A.M_NO and M.M_ID=?"            
-                authorities-by-username-query="select M.M_ID as username, A.A_AUTH as authority from MEMBER M, AUTHORITY A where M.M_NO=A.M_NO and M.M_ID=?"   
-            />
-        </authentication-provider>
-    </authentication-manager>
-    
-    <!-- 로그인 후 부가작업 -->
-    <beans:bean id='loginHandler' 
-    	class='bit.spring4.buzbee.util.LoginHandler'>
-    </beans:bean>
+ 	<beans:bean id="userService" class="bit.spring4.buzbee.util.CustomUserDetailService">
+ 		<beans:constructor-arg name="sqlSession" ref="sqlSession" />
+ 	</beans:bean>
 </beans:beans>

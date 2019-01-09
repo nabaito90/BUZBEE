@@ -17,8 +17,6 @@ import bit.spring4.buzbee.util.TrendCrawler;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	@Autowired
-	private LoginService loginService;
 	
 	@RequestMapping("/")
 	public ModelAndView board(Principal principal) {
@@ -30,9 +28,7 @@ public class BoardController {
 		}
 		
 		List<MemberAndBoard> buzzing = boardService.selectByIdService(principal.getName()); 
-		Member member = loginService.selectByIdService(principal);
 		mv.setViewName("board/board");
-		mv.addObject("member", member);
 		mv.addObject("buzzing", buzzing);
 		mv.addObject("list", new TrendCrawler().getTIOBEs("item"));
 		return mv;
@@ -41,16 +37,9 @@ public class BoardController {
 	@RequestMapping("/{id}")
 	public ModelAndView board(@PathVariable String id) {
 		ModelAndView mv = new ModelAndView();
-				
-		Member member = loginService.selectByIdService(id);
-		if(member == null) {
-			mv.setViewName("redirect:/");
-			return mv;
-		}
 		
 		List<MemberAndBoard> buzzing = boardService.selectByIdService(id); 
 		mv.setViewName("profile/profile");
-		mv.addObject("member", member);
 		mv.addObject("buzzing", buzzing);
 		mv.addObject("list", new TrendCrawler().getTIOBEs("item"));
 		return mv;

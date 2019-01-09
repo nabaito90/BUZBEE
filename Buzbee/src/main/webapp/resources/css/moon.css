@@ -20,6 +20,7 @@ a{color:#b3b3b3}
 #header-notice{padding-left:2%}
 #top-logo{padding-left:4%}
 .nav-item{margin-right:20px}
+.nav-item:hover{border-bottom:2px solid black;margin-bottom:2px;height:49px}
 #input-form{background:#ffe180;border-color:#ffe180}
 #content-border{border-color:#ffe180}
 #buzzing{background:#fff3e6}

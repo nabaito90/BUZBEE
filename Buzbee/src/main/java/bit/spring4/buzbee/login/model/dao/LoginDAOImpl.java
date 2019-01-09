@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import bit.spring4.buzbee.model.Member;
+import bit.spring4.buzbee.model.MemberAndAuth;
 
 @Repository
 public class LoginDAOImpl implements LoginDAO {
