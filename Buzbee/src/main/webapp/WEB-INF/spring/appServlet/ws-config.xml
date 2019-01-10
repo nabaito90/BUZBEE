@@ -7,7 +7,7 @@
 		
 	<!-- 웹소켓 핸들러 bean -->
 	<websocket:handlers>
-		<websocket:mapping path="/echo" handler="echo"/>
+		<websocket:mapping path="echo/echo" handler="echo"/>
 		<websocket:sockjs/>
 	</websocket:handlers>
 

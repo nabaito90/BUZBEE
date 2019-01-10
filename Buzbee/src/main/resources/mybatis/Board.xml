@@ -17,9 +17,44 @@
 	<select id='selectById' parameterType='String' resultType='MemberAndBoard'>
 		select * from BOARD B, MEMBER M where M.M_ID=#{id} and B.M_NO = M.M_NO order by B.B_RDATE desc
 	</select>
+	<select id='selectByNo' parameterType='long' resultType='MemberAndBoard'>
+		select * from BOARD B, MEMBER M where M.M_NO=#{m_no} and B.M_NO = M.M_NO order by B.B_RDATE desc
+	</select>
+	<select id='countBuzzes' parameterType='long' resultType='long'>
+		select count(*) from BOARD where M_NO=#{m_no} 
+	</select>
+	<select id='countFollower' parameterType='long' resultType='long'>
+		select count(*) from FOLLOWER F, MEMBER M where M.M_NO=#{m_no} and M.M_NO=F.M_NO
+	</select>
+	<select id='countFollowing' parameterType='long' resultType='long'>
+		select count(*) from FOLLOWING F, MEMBER M where M.M_NO=#{m_no} and M.M_NO=F.M_NO
+	</select>
+	<select id='countLikes' parameterType='long' resultType='long'>
+		select count(*) from LIKES L, MEMBER M where M.M_NO=#{m_no} and M.M_NO=L.M_NO
+	</select>
+	<select id='maxBoardNo' parameterType='long' resultType='long'>
+		select max(B_NO) from BOARD where M_NO=#{m_no}
+	</select>
+	
 	
 	<insert id='insert' parameterType='Board'>
 		insert into BOARD values(BOARD_SEQ.nextval, #{m_no}, null, #{b_content}, 0, 0, BOARD_SEQ.currval, SYSDATE)
 	</insert>
+	<!-- append -->
+	
+	<!-- for Ajax -->
+	<insert id="insertLikes" parameterType='map'>
+		insert into LIKES values(#{b_no}, #{m_no})
+	</insert>
+	<insert id="deleteLikes" parameterType='map'>
+		delete from LIKES where B_NO=#{b_no}
+	</insert>
+	
+	<update id='plusLikes' parameterType='long'>
+		update BOARD set B_LIKE = B_LIKE + 1 where B_NO=#{b_no}
+	</update>
+	<update id='minusLikes' parameterType='long'>
+		update BOARD set B_LIKE = B_LIKE - 1 where B_NO=#{b_no}
+	</update>
 	<!-- append -->
 </mapper>

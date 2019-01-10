@@ -36,10 +36,11 @@ public class EchoHandler extends TextWebSocketHandler {
 		  logger.info("{}로 부터 {} 받음", session.getPrincipal().getName(), msg);
 
 		  long m_no = loginService.selectM_NOByIdService(session.getPrincipal().getName()); 
-		  boardService.insertService(m_no, msg); // DB에 메세지 insert
+		  long b_no = boardService.insertService(m_no, msg); // DB에 메세지 insert
+		  msg += "$" + b_no;
 		  for (WebSocketSession sess : sessionList) {
 			  if(sess.getPrincipal().getName().equals(session.getPrincipal().getName())) {
-				  sess.sendMessage(new TextMessage(session.getPrincipal().getName() + " : " + message.getPayload()));
+				  sess.sendMessage(new TextMessage(msg));
 			  }
 		  }
 	  }

@@ -12,8 +12,6 @@
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
   <title>Dashio - Bootstrap Admin Template</title>
-	
-   
   
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
@@ -47,98 +45,117 @@
     Author: TemplateMag.com
     License: https://templatemag.com/license/
   ======================================================= -->
-    <!-- Web Socket js -->
-   <script type="text/javascript">
-		$(document).ready(function() {
-			$(document).click(function(e){
-				if (!$(e.target).is('#search2')) {
-					if($(e.target).is('#buzzing')) buzzing();
-					if($("#search2").val().trim().length == 0) {
-						$("#search2").prop("rows", 1)
-						$("#search2").val("");
-						$("#appended").remove();
-					}
+  <script>
+ 	 $(document).ready(function() {
+		$(document).click(function(e){
+			if(!$(e.target).is('#search2')) {
+				if($(e.target).is('#buzzing')) buzzing();
+				if($("#search2").val().trim().length == 0) {
+					$("#search2").prop("rows", 1)
+					$("#search2").val("");
+					$("#appended").remove();
 				}
-			});
-			
-			$("#search2").keyup(function(){
-				console.log($("#search2").val().length);
-				if($("#search2").val().trim().length > 0) $('#buzzing').attr("class", "btn btn-search-bar");
-				else $('#buzzing').attr("class", "btn btn-search-bar disabled");
-				$('#textCount').html($("#search2").val().length);
-				if($("#search2").val().length > 140) {
-					$('#buzzing').attr("class", "btn btn-search-bar disabled");
-					$('#textCount').css("color", "red");
-				} else {
-					$('#textCount').css("color", "#31708f");
-				}
-			});				
-			
-			$("#search2").click(function(){
-				$("#search2").prop("rows", 5);
-				$("#appended").remove();
-				$("#inputarea").append("<div id='appended' style='text-align:right'>"+
-									       "<span id='textCount'>"+ $("#search2").val().length +"</span>/140&nbsp;&nbsp;<button id='buzzing' class='btn btn-search-bar disabled'>버징하기</button>"+
-									   "</div>");
-				if($("#search2").val().length > 140) $('#textCount').css("color", "red");
-				else if($("#search2").val().trim().length > 0) {
-					$('#buzzing').attr("class", "btn btn-search-bar");										
-				}
-			});
-			
-			$("#sendBtn").click(function() {
-				if($("#search2").val().trim() == '') return;
-				sendMessage();
-				$('#search2').val('')
-			});
+			}
 		});
 		
-		// Web Socket js 
-		// 웹소켓을 지정한 url로 연결한다.
-		let sock = new SockJS("<c:url value="/echo"/>");
-		sock.onmessage = onMessage;
-		sock.onclose = onClose;
+		$("#search2").keyup(function(){
+			console.log($("#search2").val().length);
+			if($("#search2").val().trim().length > 0) $('#buzzing').attr("class", "btn btn-search-bar");
+			else $('#buzzing').attr("class", "btn btn-search-bar disabled");
+			$('#textCount').html($("#search2").val().length);
+			if($("#search2").val().length > 140) {
+				$('#buzzing').attr("class", "btn btn-search-bar disabled");
+				$('#textCount').css("color", "red");
+			} else {
+				$('#textCount').css("color", "#31708f");
+			}
+		});				
 		
-		// 메시지 전송
-		function sendMessage() {
-	       sock.send($("#search2").val());
-		}
+		$("#search2").click(function(){
+			$("#search2").prop("rows", 5);
+			$("#appended").remove();
+			$("#inputarea").append("<div id='appended' style='text-align:right'>"+
+								       "<span id='textCount'>"+ $("#search2").val().length +"</span>/140&nbsp;&nbsp;<button id='buzzing' class='btn btn-search-bar disabled'>버징하기</button>"+
+								   "</div>");
+			if($("#search2").val().length > 140) $('#textCount').css("color", "red");
+			else if($("#search2").val().trim().length > 0) {
+				$('#buzzing').attr("class", "btn btn-search-bar");										
+			}
+		});
 		
-		// 서버로부터 메시지를 받았을 때
-		function onMessage(msg) {
-			$("#empty-buzzing").remove();
-			var data = msg.data;
-			data = data.substring(data.indexOf(":") + 1);
-			data = data.replace(/\n/gi, "</br>");
-			var html = '<div class="media">'+
-					       '<a class="media-left" href="#fake">'+
-					           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
-					       '</a>'+
-					       '<div class="media-body">'+
-					            '<h4 class="media-heading">${loginDTO.m_name} <a href="${loginDTO.username}">@${loginDTO.username}</a></h4><p>' + data + '</p>'+
-					            '<ul class="nav nav-pills nav-pills-custom">'+
-					                '<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>'+
-					                '<li><a href="#"><span class="glyphicon glyphicon-retweet"></span></a></li>'+
-					                '<li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>'+
-					                '<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>'+
-					            '</ul>'+
-					       '</div>'+
-					  '</div>';
-			$("#buz").prepend(html);
-		}
-		
-		// 서버와 연결을 끊었을 때
-		function onClose(evt) {
-			$("#buz").append("연결 끊김");
-		}
-		
-		function buzzing() {
+		$("#sendBtn").click(function() {
 			if($("#search2").val().trim() == '') return;
 			sendMessage();
-			$("#search2").val('');
-		}
-	</script>
- 
+			$('#search2').val('')
+		});
+	});
+ 	 
+	//Web Socket js 
+	//웹소켓을 지정한 url로 연결한다.
+	let sock = new SockJS("<c:url value='/echo/echo'/>");
+	sock.onmessage = onMessage;
+	sock.onclose = onClose;
+	
+	function sendMessage() {
+	   sock.send($("#search2").val());
+	}
+
+	// 서버로부터 메시지를 받았을 때
+	function onMessage(msg) {
+		$("#empty-buzzing").remove();
+		var data = msg.data;
+		boardNo = data.substring(data.lastIndexOf("$") + 1);
+		data = data.substring(0, data.lastIndexOf("$"));
+		data = data.replace(/\n/gi, "</br>");
+		var html = '<div class="media">'+
+				       '<a class="media-left" href="#fake">'+
+				           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
+				       '</a>'+
+				       '<div class="media-body">'+
+				            '<h4 class="media-heading">${loginDTO.m_name} <a href="${loginDTO.username}">@${loginDTO.username}</a></h4><p>' + data + '</p>'+
+				            '<ul class="nav nav-pills nav-pills-custom">'+
+				                '<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>'+
+				                '<li><a href="#"><span class="glyphicon glyphicon-retweet" id="board-rebuz">0</span></a></li>'+
+				                '<li><a href="javascript:likes('+boardNo+')"><span class="glyphicon glyphicon-star" id="board-likes'+boardNo+'">0</span></a></li>'+
+				                '<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>'+
+				            '</ul>'+
+				       '</div>'+
+				  '</div>';
+		$("#buz").prepend(html);
+	}
+
+	// 서버와 연결을 끊었을 때
+	function onClose(evt) {
+		$("#buz").append("연결 끊김");
+	}
+
+	function buzzing() {
+		if($("#search2").val().trim() == '') return;
+		sendMessage();
+		$("#search2").val('');
+	}
+
+	function likes(boardNo){
+		var request = $.ajax({url:"ajax/likes", method:"GET", data:{b_no:boardNo}, dataType:"html", 
+		  success: function () {},
+	      error: function (jqXHR) {
+	        alert(jqXHR.status);
+	        alert( jqXHR.statusText );
+	        alert( jqXHR.responseText );
+	        alert( jqXHR.readyState );
+	      }});
+		request.done(function(data){
+			if(data == 'true') {
+				$("#side-likes").html(parseInt($("#side-likes").html(), 10) + 1);
+				$("#board-likes" + boardNo).html(parseInt($("#board-likes" + boardNo).html(), 10) + 1);
+			} else {
+				$("#side-likes").html(parseInt($("#side-likes").html(), 10) - 1);
+				$("#board-likes" + boardNo).html(parseInt($("#board-likes" + boardNo).html(), 10) - 1);
+			}
+			
+		});
+	}
+  </script>
 </head>
 
 <body>
@@ -199,9 +216,14 @@
 	      </div>
 	    </div>
 	    <!-- END:프로필 사진  -->
+	    <div id="ex1" class="modal">
+		  <p>Thanks for clicking. That felt good.</p>
+		  <a href="#" rel="modal:close">Close</a>
+		</div>
+
 	    
 	    <!-- 버징 버튼 -->
-	    <button class="btn btn-search-bar">버징하기</button>
+	    <button class="btn btn-search-bar" id='buzzingBtn'>버징하기</button>
 	  </div>
 	</nav>
     
@@ -222,7 +244,7 @@
             <a href="index.html">
               <i class="fa fa-Buzzing"></i>
               <span style="color:#404040; font-weight:bold">버징</span>
-              <span class="label label-theme pull-right mail-info">5</span>
+              <span class="label label-theme pull-right mail-info">${etc.buzzes}</span>
               </a>
           </li>
           
@@ -230,7 +252,7 @@
             <a href="index.html">
               <i class="fa fa-Buzzing"></i>
               <span style="color:#404040; font-weight:bold">팔로잉</span>
-              <span class="label label-theme pull-right mail-info">9</span>
+              <span class="label label-theme pull-right mail-info">${etc.following}</span>
               </a>
           </li>
           
@@ -238,7 +260,7 @@
             <a href="index.html">
               <i class="fa fa-Buzzing"></i>
               <span style="color:#404040; font-weight:bold">팔로워</span>
-              <span class="label label-theme pull-right mail-info">8</span>
+              <span class="label label-theme pull-right mail-info">${etc.follower}</span>
               </a>
           </li>
           
@@ -246,7 +268,7 @@
             <a href="index.html">
               <i class="fa fa-Buzzing"></i>
               <span style="color:#404040; font-weight:bold">좋아요</span>
-              <span class="label label-theme pull-right mail-info">10</span>
+              <span class="label label-theme pull-right mail-info" id='side-likes'>${etc.likes}</span>
               </a>
           </li>          
 
@@ -306,8 +328,8 @@
                      <p>${buzz.b_content}</p>
                      <ul class="nav nav-pills nav-pills-custom">
                         <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-retweet">&nbsp;${buzz.b_rebuz}</span></a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-star">&nbsp;${buzz.b_like}</span></a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-retweet" id='board-rebuz'>${buzz.b_rebuz}</span></a></li>
+                        <li><a href="javascript:likes(${buzz.b_no})"><span class="glyphicon glyphicon-star" id='board-likes${buzz.b_no}'>${buzz.b_like}</span></a></li>
                         <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
                      </ul>
                   </div>
@@ -375,7 +397,7 @@
          </div>
          <div class="well well-sm">
             <ul class="list-inline">
-               <li>Â© 2015 Twitter</li>
+               <li>© 2015 Twitter</li>
                <li><a href="#">About</a></li>
                <li><a href="#">Help</a></li>
                <li><a href="#">Terms</a></li>
@@ -404,7 +426,6 @@
   <span class="blank"></span>
   </span>
   </div>
-  	  
   <!-- js placed at the end of the document so the pages load faster -->
   <script src="lib/jquery/jquery.min.js" ></script>
   <script src="lib/bootstrap/js/bootstrap.min.js"></script>

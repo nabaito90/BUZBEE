@@ -61,10 +61,11 @@ CREATE TABLE MUTE(
 );
 
 CREATE TABLE LIKES(
-	B_NO CONSTRAINT L_B_NO_PK primary key CONSTRAINT L_B_NO_FK
+	B_NO CONSTRAINT L_B_NO_FK
 		references BOARD(B_NO) on delete cascade NOT NULL,
 	M_NO CONSTRAINT L_M_NO_FK 
-		references MEMBER(M_NO) on delete cascade NOT NULL
+		references MEMBER(M_NO) on delete cascade NOT NULL,
+	CONSTRAINT LK_M_NO_PK primary key (M_NO, B_NO)  
 );
 
 CREATE TABLE BLOCK(

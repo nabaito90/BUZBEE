@@ -6,8 +6,8 @@
 	<typeAliases>
 		<typeAlias alias="Member" type='bit.spring4.buzbee.model.Member'/>
 		<typeAlias alias="Board" type='bit.spring4.buzbee.model.Board'/>
-		<typeAlias alias="MemberAndBoard" type='bit.spring4.buzbee.model.MemberAndBoard'/>
 		<typeAlias alias="MemberAndAuth" type='bit.spring4.buzbee.model.MemberAndAuth'/>
+		<typeAlias alias="MemberAndBoard" type='bit.spring4.buzbee.model.MemberAndBoard'/>
 		<!-- append -->
 	</typeAliases>
 	<mappers>
