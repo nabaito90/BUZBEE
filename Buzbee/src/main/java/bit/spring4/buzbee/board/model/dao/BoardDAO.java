@@ -13,6 +13,7 @@ public interface BoardDAO {
 	long countFollower(long m_no);
 	long countFollowing(long m_no);
 	long countLikes(long m_no);
+	List<String> followerOnline(long m_no);
 	
 	// for Ajax
 	boolean insertLikes(Map<String, Long> map);

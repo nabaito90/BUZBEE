@@ -107,7 +107,7 @@ INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE;
 CREATE SEQUENCE	FILES_SEQ START WITH 0 
 INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
 
-insert into FILES values(FILES_SEQ.nextval, 'a', 'a', 'a', 1);
+insert into FILES values(FILES_SEQ.nextval, 'mb.png', 'mp.png', 'mp.png', 1);
 insert into FILES values(FILES_SEQ.nextval, 'b', 'b', 'b', 1);
 insert into FILES values(FILES_SEQ.nextval, 'c', 'c', 'c', 1);
 insert into FILES values(FILES_SEQ.nextval, 'd', 'd', 'd', 1);
@@ -121,6 +121,8 @@ insert into AUTHORITY values(1, 1, 'ROLE_ADMIN');
 insert into AUTHORITY values(2, 1, 'ROLE_USER');
 insert into AUTHORITY values(3, 1, 'ROLE_USER');
 insert into AUTHORITY values(4, 1, 'ROLE_USER');
+
+insert into FOLLOWER values(1, 2);
 
 commit;
 
@@ -145,6 +147,3 @@ select * from ALL_CONSTRAINTS where TABLE_NAME='BLOCK';
 select * from ALL_CONSTRAINTS where TABLE_NAME='NOTE';
 select * from ALL_CONSTRAINTS where TABLE_NAME='FOLLOWING';
 select * from ALL_CONSTRAINTS where TABLE_NAME='FOLLOWER';
-
-
-

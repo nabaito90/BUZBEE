@@ -1,11 +1,8 @@
 package bit.spring4.buzbee.board.model.dao;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import bit.spring4.buzbee.model.Board;
@@ -51,6 +48,11 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public long countLikes(long m_no) {
 		return sqlSession.selectOne(ns + ".countLikes", m_no);
+	}
+	
+	@Override
+	public List<String> followerOnline(long m_no) {
+		return sqlSession.selectList(ns + ".followerOnline", m_no);
 	}
 	
 	// for Ajax

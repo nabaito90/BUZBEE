@@ -45,6 +45,12 @@ public class BoardServiceImpl implements BoardService {
 		return memberEtc;
 	}
 	
+	@Override
+	public List<String> followerOnlineService(long m_no) {
+		return dao.followerOnline(m_no);
+	}
+	
+	
 	// for Ajax
 	@Override
 	public boolean insertLikesService(long m_no, long b_no) {

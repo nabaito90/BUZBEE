@@ -4,6 +4,7 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -11,6 +12,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import bit.spring4.buzbee.board.model.service.BoardService;
 import bit.spring4.buzbee.login.model.service.LoginService;
+import bit.spring4.buzbee.model.UserCustom;
 
 public class EchoHandler extends TextWebSocketHandler {
 	  private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
@@ -32,15 +34,23 @@ public class EchoHandler extends TextWebSocketHandler {
 	  protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		  String msg = message.getPayload();
 		  msg = msg.replaceAll("\\n", "</br>");
-		  System.out.println(msg);
 		  logger.info("{}로 부터 {} 받음", session.getPrincipal().getName(), msg);
-
+		  
+		  String m_content = msg.substring(msg.indexOf(":") + 1);
 		  long m_no = loginService.selectM_NOByIdService(session.getPrincipal().getName()); 
-		  long b_no = boardService.insertService(m_no, msg); // DB에 메세지 insert
+		  long b_no = boardService.insertService(m_no, m_content); // DB에 메세지 insert
+		  List<String> follower = boardService.followerOnlineService(m_no);
 		  msg += "$" + b_no;
+		  
 		  for (WebSocketSession sess : sessionList) {
 			  if(sess.getPrincipal().getName().equals(session.getPrincipal().getName())) {
-				  sess.sendMessage(new TextMessage(msg));
+				  sess.sendMessage(new TextMessage(session.getPrincipal().getName() + "/" + msg));
+			  } else {
+				  for(String fol : follower) {
+					  if(fol.contains(sess.getPrincipal().getName())) {
+						  sess.sendMessage(new TextMessage(session.getPrincipal().getName() + "/" + msg));
+					  }
+				  }
 			  }
 		  }
 	  }

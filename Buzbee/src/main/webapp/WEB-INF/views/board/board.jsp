@@ -11,7 +11,7 @@
   <meta name="description" content="">
   <meta name="author" content="Dashboard">
   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <title>Dashio - Bootstrap Admin Template</title>
+  <title>버즈비</title>
   
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
@@ -21,7 +21,7 @@
   <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
   
   <!--가져온 거 -->
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='lib/bootstrap/css/twitter-bootstrap.css'>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.min.css'>
   
@@ -39,19 +39,28 @@
   <!-- Web socket CDN -->
   <script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
 
-  <!-- =======================================================
-    Template Name: Dashio
-    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
   <script>
  	 $(document).ready(function() {
+ 		$("#modal-text").keyup(function(){
+			if($("#modal-text").val().trim().length > 0) $('#modal-sendBtn').attr("class", "btn btn-search-bar");
+			else $('#buzzing').attr("class", "btn btn-search-bar disabled");
+			$('#modal-textCount').html($("#modal-text").val().length);
+			if($("#modal-text").val().length > 140) {
+				$('#modal-sendBtn').attr("class", "btn btn-search-bar disabled");
+				$('#modal-textCount').css("color", "red");
+			} else if($("#modal-text").val().length == 0) {
+				$('#modal-sendBtn').attr("class", "btn btn-search-bar disabled");
+			} else {
+				$('#modal-textCount').css("color", "#31708f");
+			}
+		});
+ 		 
 		$(document).click(function(e){
 			if(!$(e.target).is('#search2')) {
-				if($(e.target).is('#buzzing')) buzzing();
+				if($(e.target).is('#buzzing')) buzzing('#search2');
+				if($(e.target).is('#modal-sendBtn')) buzzing('#modal-text');
 				if($("#search2").val().trim().length == 0) {
-					$("#search2").prop("rows", 1)
+					$("#search2").prop("rows", 1);
 					$("#search2").val("");
 					$("#appended").remove();
 				}
@@ -59,7 +68,6 @@
 		});
 		
 		$("#search2").keyup(function(){
-			console.log($("#search2").val().length);
 			if($("#search2").val().trim().length > 0) $('#buzzing').attr("class", "btn btn-search-bar");
 			else $('#buzzing').attr("class", "btn btn-search-bar disabled");
 			$('#textCount').html($("#search2").val().length);
@@ -82,12 +90,6 @@
 				$('#buzzing').attr("class", "btn btn-search-bar");										
 			}
 		});
-		
-		$("#sendBtn").click(function() {
-			if($("#search2").val().trim() == '') return;
-			sendMessage();
-			$('#search2').val('')
-		});
 	});
  	 
 	//Web Socket js 
@@ -96,23 +98,25 @@
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 	
-	function sendMessage() {
-	   sock.send($("#search2").val());
+	function sendMessage(id) {
+	   sock.send("${loginDTO.m_name}:" + $(id).val());
 	}
 
 	// 서버로부터 메시지를 받았을 때
 	function onMessage(msg) {
 		$("#empty-buzzing").remove();
 		var data = msg.data;
+		id = data.substring(0, data.indexOf("/"));
+		name = data.substring(data.indexOf("/") + 1, data.indexOf(":"));
+		msg = data.substring(data.indexOf(":") + 1, data.lastIndexOf("$"));
 		boardNo = data.substring(data.lastIndexOf("$") + 1);
-		data = data.substring(0, data.lastIndexOf("$"));
 		data = data.replace(/\n/gi, "</br>");
-		var html = '<div class="media">'+
+		var html = '<div class="media" id="lists">'+
 				       '<a class="media-left" href="#fake">'+
 				           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
 				       '</a>'+
 				       '<div class="media-body">'+
-				            '<h4 class="media-heading">${loginDTO.m_name} <a href="${loginDTO.username}">@${loginDTO.username}</a></h4><p>' + data + '</p>'+
+				            '<h4 class="media-heading">' + name + ' <a href="' + id + '">@' + id + '</a></h4><p>' + msg + '</p>'+
 				            '<ul class="nav nav-pills nav-pills-custom">'+
 				                '<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>'+
 				                '<li><a href="#"><span class="glyphicon glyphicon-retweet" id="board-rebuz">0</span></a></li>'+
@@ -126,13 +130,13 @@
 
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
-		$("#buz").append("연결 끊김");
+		$("#buz").append("서버 오류");
 	}
 
-	function buzzing() {
-		if($("#search2").val().trim() == '') return;
-		sendMessage();
-		$("#search2").val('');
+	function buzzing(id) {
+		if($(id).val().trim() == '') return;
+		sendMessage(id);
+		$(id).val('');
 	}
 
 	function likes(boardNo){
@@ -140,9 +144,9 @@
 		  success: function () {},
 	      error: function (jqXHR) {
 	        alert(jqXHR.status);
-	        alert( jqXHR.statusText );
-	        alert( jqXHR.responseText );
-	        alert( jqXHR.readyState );
+	        alert(jqXHR.statusText );
+	        alert(jqXHR.responseText );
+	        alert(jqXHR.readyState );
 	      }});
 		request.done(function(data){
 			if(data == 'true') {
@@ -152,7 +156,6 @@
 				$("#side-likes").html(parseInt($("#side-likes").html(), 10) - 1);
 				$("#board-likes" + boardNo).html(parseInt($("#board-likes" + boardNo).html(), 10) - 1);
 			}
-			
 		});
 	}
   </script>
@@ -216,17 +219,44 @@
 	      </div>
 	    </div>
 	    <!-- END:프로필 사진  -->
-	    <div id="ex1" class="modal">
-		  <p>Thanks for clicking. That felt good.</p>
-		  <a href="#" rel="modal:close">Close</a>
-		</div>
-
 	    
 	    <!-- 버징 버튼 -->
 	    <button class="btn btn-search-bar" id='buzzingBtn'>버징하기</button>
 	  </div>
 	</nav>
-    
+	
+    <!-- Modal -->
+	<div class="modal fade" id="layerpop" >
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <!-- header -->
+	      <div class="modal-header" style='background:#ffe180'>
+	        <!-- 닫기(x) 버튼 -->
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	        <!-- header title -->
+	        <h3 class="modal-title text-center" style='font-weight:bold;color:black'>새로운 버징 작성</h3>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">
+	            <textarea class='form-control' id='modal-text' style='font-size:1.5rem' rows='5' placeholder='무슨 일이 일어나고 있나요?'></textarea>
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	        <span id='modal-textCount'>0</span>/140&nbsp;
+	        <button class="btn btn-search-bar disabled" id='modal-sendBtn' data-dismiss="modal">버징하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<script>
+		$(function(){
+	        $("#buzzingBtn").click(function(){
+	            $('div.modal').modal();
+	        })
+	    })
+    </script>
+	<!-- Modal -->
+
     <!--header end-->
     <!-- **********************************************************************************************************************************************************
         MAIN SIDEBAR MENU
@@ -234,10 +264,10 @@
     <!--sidebar start-->
     
      <aside>
-      <div id="sidebar" class="nav-collapse ">
+      <div id="sidebar" class="nav-collapse" tabindex='1'>
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-          <p class="centered"><a href="profile"><img src="resources/img/mb.png" class="img-circle" width='180'></a></p>
+          <p class="centered"><a href="${loginDTO.username}"><img src="resources/img/mb.png" class="img-circle" width='180'></a></p>
           <h5 class="centered" style="color:#404040; font-weight:bold">${loginDTO.m_name}</h5>
           <h5 class="centered" style="color:#b3b3b3">@${loginDTO.username}</h5>
           <li class="mt">
@@ -271,7 +301,6 @@
               <span class="label label-theme pull-right mail-info" id='side-likes'>${etc.likes}</span>
               </a>
           </li>          
-
 
           <li class="mt">
             <a href="index.html">
@@ -308,7 +337,7 @@
                <div class="media-body">
                   <div class="form-group has-feedback" id='inputarea'>
                      <label class="control-label sr-only" for="inputSuccess5">Hidden label</label>
-                     <textarea class="form-control" id="search2" aria-describedby="search" placeholder='지금 무슨 일이 일어나고 있나요?' rows='1'></textarea>
+                     <textarea class="form-control" id="search2" aria-describedby="search" placeholder='무슨 일이 일어나고 있나요?' rows='1'></textarea>
                      <span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true" ></span>
                      <!--<span id="search2" class="sr-only">(success)</span> -->
                   </div>
@@ -319,7 +348,7 @@
                <div id='empty-buzzing' class='text-center'>아직 작성한 버징이 없습니다. 새로운 버징을 작성해주세요!</div>
             </c:if>
             <c:forEach items='${buzzing}' var='buzz'>
-               <div class="media">
+               <div class="media" id='lists'>
                   <a class="media-left" href="#fake">
                      <img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
                   </a>

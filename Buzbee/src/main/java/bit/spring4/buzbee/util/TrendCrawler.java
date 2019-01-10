@@ -1,3 +1,12 @@
+/* 
+
+사용하려면 jsoup 추가할 것
+<dependency>
+    <groupId>org.jsoup</groupId>
+    <artifactId>jsoup</artifactId>
+    <version>1.11.1</version>
+</dependency>
+
 package bit.spring4.buzbee.util;
 
 import java.io.*;
@@ -71,3 +80,4 @@ public class TrendCrawler {
 		queryList.add(new Google(query, hit));
 	}
 }
+*/

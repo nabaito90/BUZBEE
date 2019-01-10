@@ -1,7 +1,6 @@
 package bit.spring4.buzbee.login.model.dao;
 
 import bit.spring4.buzbee.model.Member;
-import bit.spring4.buzbee.model.MemberAndAuth;
 
 public interface LoginDAO {
 	boolean insert(Member member);

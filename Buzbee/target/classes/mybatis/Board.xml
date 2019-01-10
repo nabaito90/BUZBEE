@@ -35,7 +35,9 @@
 	<select id='maxBoardNo' parameterType='long' resultType='long'>
 		select max(B_NO) from BOARD where M_NO=#{m_no}
 	</select>
-	
+	<select id='followerOnline' parameterType='long' resultType='String'>
+		select M.M_ID from (select F.M_NO2 from FOLLOWER F, MEMBER M where M.M_NO=F.M_NO and M.M_NO=#{m_no}), FOLLOWER F, MEMBER M where F.M_NO2=M.M_NO
+	</select>
 	
 	<insert id='insert' parameterType='Board'>
 		insert into BOARD values(BOARD_SEQ.nextval, #{m_no}, null, #{b_content}, 0, 0, BOARD_SEQ.currval, SYSDATE)
