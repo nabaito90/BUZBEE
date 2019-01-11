@@ -29,6 +29,37 @@ body.modal-open {overflow: scroll;}
 #lists{margin:0;padding-top:20px;border-top:1px solid Gainsboro;}
 #buz{padding:0;padding-left:10px;padding-right:10px;}
 .label.label-theme.pull-right.mail-info{margin:0;font-size:1.4rem;padding:6px}
+.glyphicon{margin:0}
+.modal-header{padding:10px}
+
+/* 좋아요 버튼 시작 */
+heart_body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.like{
+  height: 40px;
+  width: 40px;
+  background-image: url('http://abs.twimg.com/a/1517453990/img/animations/web_heart_animation_edge.png');
+  background-size: 1450px 50px;
+  cursor: pointer;
+}
+.like:hover{
+  background-position: 3.571428571428571%;
+}
+.like.is-liked{
+  animation: like 1s steps(28) forwards;
+}
+@keyframes like {
+  0%{
+    background-position: 0 0;
+  }
+  100%{
+    background-position: right;
+  }
+}
+/* 좋아요 버튼 끝 */
 
 @media (max-width: 768px) {
 	.layer{width:100%;}

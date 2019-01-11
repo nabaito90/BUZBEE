@@ -15,10 +15,18 @@
 	</resultMap>
 	
 	<select id='selectById' parameterType='String' resultType='MemberAndBoard'>
-		select * from BOARD B, MEMBER M where M.M_ID=#{id} and B.M_NO = M.M_NO order by B.B_RDATE desc
+		select * from (
+			select * from BOARD natural join (select * from MEMBER where M_NO in (select M_NO2 from FOLLOWING where M_ID=#{id})) 
+			union all
+			select * from BOARD natural join MEMBER where M_ID=#{id}
+		) order by B_RDATE desc
 	</select>
 	<select id='selectByNo' parameterType='long' resultType='MemberAndBoard'>
-		select * from BOARD B, MEMBER M where M.M_NO=#{m_no} and B.M_NO = M.M_NO order by B.B_RDATE desc
+		select * from (
+			select * from BOARD natural join (select * from MEMBER where M_NO in (select M_NO2 from FOLLOWING where M_NO=#{m_no})) 
+			union all
+			select * from BOARD natural join MEMBER where M_NO=#{m_no}
+		) order by B_RDATE desc
 	</select>
 	<select id='countBuzzes' parameterType='long' resultType='long'>
 		select count(*) from BOARD where M_NO=#{m_no} 
@@ -36,7 +44,7 @@
 		select max(B_NO) from BOARD where M_NO=#{m_no}
 	</select>
 	<select id='followerOnline' parameterType='long' resultType='String'>
-		select M.M_ID from (select F.M_NO2 from FOLLOWER F, MEMBER M where M.M_NO=F.M_NO and M.M_NO=#{m_no}), FOLLOWER F, MEMBER M where F.M_NO2=M.M_NO
+		select M.M_ID from (select F.M_NO2 from FOLLOWER F, MEMBER M where M.M_NO=F.M_NO and M.M_NO=#{m_no}) F, MEMBER M where F.M_NO2=M.M_NO
 	</select>
 	
 	<insert id='insert' parameterType='Board'>

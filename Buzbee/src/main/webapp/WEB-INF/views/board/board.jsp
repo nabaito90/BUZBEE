@@ -40,7 +40,7 @@
   <script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
 
   <script>
- 	 $(document).ready(function() {
+ 	 $(document).ready(function() { 	
  		$("#modal-text").keyup(function(){
 			if($("#modal-text").val().trim().length > 0) $('#modal-sendBtn').attr("class", "btn btn-search-bar");
 			else $('#buzzing').attr("class", "btn btn-search-bar disabled");
@@ -58,7 +58,7 @@
 		$(document).click(function(e){
 			if(!$(e.target).is('#search2')) {
 				if($(e.target).is('#buzzing')) buzzing('#search2');
-				if($(e.target).is('#modal-sendBtn')) buzzing('#modal-text');
+				else if($(e.target).is('#modal-sendBtn')) buzzing('#modal-text');
 				if($("#search2").val().trim().length == 0) {
 					$("#search2").prop("rows", 1);
 					$("#search2").val("");
@@ -111,16 +111,16 @@
 		msg = data.substring(data.indexOf(":") + 1, data.lastIndexOf("$"));
 		boardNo = data.substring(data.lastIndexOf("$") + 1);
 		data = data.replace(/\n/gi, "</br>");
-		var html = '<div class="media" id="lists">'+
+		var html = '<div class="media lists" id="lists">'+
 				       '<a class="media-left" href="#fake">'+
 				           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
 				       '</a>'+
-				       '<div class="media-body">'+
+				       '<div class="media-body" onclick="contentPopUp('+boardNo+')">'+
 				            '<h4 class="media-heading">' + name + ' <a href="' + id + '">@' + id + '</a></h4><p>' + msg + '</p>'+
 				            '<ul class="nav nav-pills nav-pills-custom">'+
 				                '<li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>'+
 				                '<li><a href="#"><span class="glyphicon glyphicon-retweet" id="board-rebuz">0</span></a></li>'+
-				                '<li><a href="javascript:likes('+boardNo+')"><span class="glyphicon glyphicon-star" id="board-likes'+boardNo+'">0</span></a></li>'+
+				                '<li onclick="likes(event, '+boardNo+')"><a><span class="glyphicon glyphicon-star" id="board-likes'+boardNo+'">0</span></a></li>'+
 				                '<li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>'+
 				            '</ul>'+
 				       '</div>'+
@@ -139,14 +139,14 @@
 		$(id).val('');
 	}
 
-	function likes(boardNo){
+	function likes(e, boardNo){
 		var request = $.ajax({url:"ajax/likes", method:"GET", data:{b_no:boardNo}, dataType:"html", 
 		  success: function () {},
 	      error: function (jqXHR) {
 	        alert(jqXHR.status);
-	        alert(jqXHR.statusText );
-	        alert(jqXHR.responseText );
-	        alert(jqXHR.readyState );
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
 	      }});
 		request.done(function(data){
 			if(data == 'true') {
@@ -157,6 +157,12 @@
 				$("#board-likes" + boardNo).html(parseInt($("#board-likes" + boardNo).html(), 10) - 1);
 			}
 		});
+		e.stopPropagation();
+	}
+	
+	function contentPopUp(b_no) {
+		$('#content-modal').modal();
+		$('#modal-bno').val(b_no);
 	}
   </script>
 </head>
@@ -226,7 +232,7 @@
 	</nav>
 	
     <!-- Modal -->
-	<div class="modal fade" id="layerpop" >
+	<div class="modal fade" id="buzzingModal" >
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <!-- header -->
@@ -238,7 +244,7 @@
 	      </div>
 	      <!-- body -->
 	      <div class="modal-body">
-	            <textarea class='form-control' id='modal-text' style='font-size:1.5rem' rows='5' placeholder='무슨 일이 일어나고 있나요?'></textarea>
+	      	<textarea class='form-control' id='modal-text' style='font-size:1.5rem' rows='5' placeholder='무슨 일이 일어나고 있나요?'></textarea>
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
@@ -251,7 +257,8 @@
 	<script>
 		$(function(){
 	        $("#buzzingBtn").click(function(){
-	            $('div.modal').modal();
+	            $('#buzzingModal').modal();
+	            $('#modal-text').focus();
 	        })
 	    })
     </script>
@@ -337,9 +344,9 @@
                <div class="media-body">
                   <div class="form-group has-feedback" id='inputarea'>
                      <label class="control-label sr-only" for="inputSuccess5">Hidden label</label>
-                     <textarea class="form-control" id="search2" aria-describedby="search" placeholder='무슨 일이 일어나고 있나요?' rows='1'></textarea>
-                     <span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true" ></span>
-                     <!--<span id="search2" class="sr-only">(success)</span> -->
+                     	<textarea class="form-control" id="search2" aria-describedby="search" placeholder='무슨 일이 일어나고 있나요?' rows='1'></textarea>
+                     <span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true" onclick='alert("구현 아직 안됐다잉");'></span>
+                     <span id="search2" class="sr-only">(success)</span>
                   </div>
                </div>
             </div>
@@ -348,17 +355,17 @@
                <div id='empty-buzzing' class='text-center'>아직 작성한 버징이 없습니다. 새로운 버징을 작성해주세요!</div>
             </c:if>
             <c:forEach items='${buzzing}' var='buzz'>
-               <div class="media" id='lists'>
+               <div class="media lists" id='lists'>
                   <a class="media-left" href="#fake">
                      <img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">
                   </a>
-                  <div class="media-body">
+                  <div class="media-body" onclick='contentPopUp(${buzz.b_no})'>
                      <h4 class="media-heading">${buzz.m_name} <a href='${buzz.m_id}'>@${buzz.m_id}</a></h4>
                      <p>${buzz.b_content}</p>
                      <ul class="nav nav-pills nav-pills-custom">
                         <li><a href="#"><span class="glyphicon glyphicon-share-alt"></span></a></li>
                         <li><a href="#"><span class="glyphicon glyphicon-retweet" id='board-rebuz'>${buzz.b_rebuz}</span></a></li>
-                        <li><a href="javascript:likes(${buzz.b_no})"><span class="glyphicon glyphicon-star" id='board-likes${buzz.b_no}'>${buzz.b_like}</span></a></li>
+                        <li onclick='likes(event, ${buzz.b_no})'><a><span class="glyphicon glyphicon-star" id='board-likes${buzz.b_no}'>${buzz.b_like}</span></a></li>
                         <li><a href="#"><span class="glyphicon glyphicon-option-horizontal"></span></a></li>
                      </ul>
                   </div>
@@ -367,6 +374,36 @@
             </div>
          </div>
       </div>
+      
+	<!-- Content Modal -->
+	<div class="modal fade" id="content-modal" >
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <input type='hidden' id='modal-bno'/>
+	      <!-- header -->
+	      <div class="modal-header" style='background:#ffe180'>
+	        <!-- 닫기(x) 버튼 -->
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	        <!-- header title -->
+	        <a class="media-left" href="#fake" style='float:left;'>
+            	<img alt="" class="media-object img-rounded" src="http://placehold.it/40x40">
+            </a>
+            <h4 class="media-heading" style='line-height:20px'>홍길동<br/><a href='admin'>@admin</a></h4>
+	      </div>
+	      <!-- body -->
+	      <div class="modal-body">
+	            <h2>asdf</h2>
+	      </div>
+	      <!-- Footer -->
+	      <div class="modal-footer">
+	      	<textarea class="form-control" id="search2" aria-describedby="search" placeholder='다른 버징 추가하기' rows='1'></textarea>
+	        <span id='modal-textCount'>0</span>/140&nbsp;
+	        <button class="btn btn-search-bar disabled" id='modal-sendBtn' data-dismiss="modal">버징하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Content Modal -->
 
       <div class="col-xs-3" id='side-nav'>
          <div class="panel panel-default panel-custom">
@@ -466,6 +503,7 @@
   <!--common script for all pages-->
   <script src="lib/common-scripts.js"></script>
   <!--script for this page-->
+  <script src="resources/lib/jquery/heart.js"></script>
 </body>
 
 </html>

@@ -123,6 +123,9 @@ insert into AUTHORITY values(3, 1, 'ROLE_USER');
 insert into AUTHORITY values(4, 1, 'ROLE_USER');
 
 insert into FOLLOWER values(1, 2);
+insert into FOLLOWING values(2, 1, 'N');
+insert into FOLLOWING values(1, 3, 'N');
+insert into FOLLOWER values(3, 1);
 
 commit;
 
