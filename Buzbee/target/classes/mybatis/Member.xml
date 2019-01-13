@@ -19,9 +19,11 @@
 	<select id='selectById' parameterType='String' resultType='Member'>
 		select * from MEMBER where M_ID=#{id}
 	</select>	
-	
 	<select id='selectM_NOById' parameterType='String' resultType='long'>
 		select M_NO from MEMBER where M_ID=#{id}
+	</select>
+	<select id='selectByNo' parameterType='long' resultType='Member'>
+		select * from MEMBER where M_NO=#{m_no}
 	</select>
 	
 	<!-- for Security -->

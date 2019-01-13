@@ -23,6 +23,11 @@ public class LoginServiceImpl implements LoginService {
 	}
 	
 	@Override
+	public Member selectByNoService(long m_no) {
+		return dao.selectByNo(m_no);
+	}
+	
+	@Override
 	public Member selectByEmailService(String email) {
 		return null;
 	}

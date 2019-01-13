@@ -1,0 +1,105 @@
+
+html, body { 
+	margin: 0;
+	height:97%;
+}
+
+#container {
+	display: flex;
+	justify-content: center;
+	background-color: #fff3e6;
+	min-height:100%;
+}
+
+div#left {
+	margin: 3px;
+	float:left;
+	width:60%;
+	padding:6px;
+	float:left;
+	display:block;
+	border-radius: 4px;
+}
+
+div#right{
+	float:left; 
+	width:30%;
+	display:inline-block;
+	margin: 25px;
+    		 	padding: 25px;
+	color:black;
+	align:center;
+	border-radius: 4px;
+}
+div#right_content{
+	background-color: #fff; 
+	border: 1px solid #e6e6e6; 
+	border-radius: 1px; 
+	margin: 0 0 10px ; 
+	padding: 10px 1px ;
+	align:center;
+	text-align: center;
+	border-radius: 4px;
+}
+div#agree{
+	margin: 10px 60px;
+}
+div#right_login{
+	background-color: #fff; 
+	border: 1px solid #e6e6e6; 
+	border-radius: 1px; 
+	margin: 0 0 10px; 
+	padding: 10px 0;
+	align:center;
+	text-align: center;
+}
+input{
+	width: 90%; 
+	/*입력 칸 (input field) 의 폭을 지정하기 위해, 폭 속성 (width property) 를 사용하였습니다.*/ 
+	padding: 12px 20px; 
+	margin: 8px 0; 
+	display: inline-block; 
+	border: 1px solid #ccc; 
+	border-radius: 4px; 
+	box-sizing: border-box;
+	box-shadow: 0 0 black;
+	}
+button{
+	width: 90%; 
+	background-color: #fbd043; 
+	color: #838383; 
+	padding: 14px 20px; 
+	margin: 8px 0; 
+	border: 1px solid #fbd043; 
+	border-radius: 4px; 
+	cursor: pointer;
+}
+h2, p, a{
+	text-color: #999;
+	text-align: center;
+}
+#Footer--fixed {
+	height: 10px;
+}
+#Footerlist{
+	background: #fff;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: auto;
+}
+#Footerfinal{
+	color: #aab8c2;
+	font-size: 12px;
+	display: inline-block;
+				padding: 0 1px 0 1px;
+}
+il{
+	text-align: inherit;
+}
+img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}

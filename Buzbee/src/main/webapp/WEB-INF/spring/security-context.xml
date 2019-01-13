@@ -9,15 +9,17 @@
 		<intercept-url pattern="/**" access="permitAll" /> 
 		<access-denied-handler error-page="/denied.do"/>
 		<form-login 
-			default-target-url="/"
-		/>
+   			default-target-url="/"
+   			always-use-default-target="true"	
+   		/>
 		<logout />
 
 		<!--
 		<intercept-url pattern="/login" access="permitAll" />   
 		<intercept-url pattern="/resources/**" access="permitAll" />  
 		<intercept-url pattern="/**" access="hasRole('USER')" />  
-		<form-login login-page="/login"                    
+		<form-login 
+			login-page="/login"                    
 			default-target-url="/monitering"            
 			username-parameter="username"         
 			password-parameter="password"          

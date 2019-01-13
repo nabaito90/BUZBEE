@@ -40,7 +40,21 @@
   <script src="http://cdn.sockjs.org/sockjs-0.3.4.js"></script>
 
   <script>
+ 	 var newBuzzingCount = 0;
+
  	 $(document).ready(function() { 	
+ 		function fileUpload(e){
+			$("input:file").click();               
+			var ext = $("input:file").val().split(".").pop().toLowerCase();
+			if(ext.length > 0){
+				if($.inArray(ext, ["gif","png","jpg","jpeg"]) == -1) { 
+					alert("gif,png,jpg 파일만 업로드 할수 있습니다.");
+					return false;  
+				}                  
+			}
+			$("input:file").val().toLowerCase();
+		};
+ 		 
  		$("#modal-text").keyup(function(){
 			if($("#modal-text").val().trim().length > 0) $('#modal-sendBtn').attr("class", "btn btn-search-bar");
 			else $('#buzzing').attr("class", "btn btn-search-bar disabled");
@@ -57,8 +71,9 @@
  		 
 		$(document).click(function(e){
 			if(!$(e.target).is('#search2')) {
-				if($(e.target).is('#buzzing')) buzzing('#search2');
-				else if($(e.target).is('#modal-sendBtn')) buzzing('#modal-text');
+				if($(e.target).is('#buzzing')) {buzzing('#search2');}
+				else if ($(e.target).is('#modal-sendBtn')) {buzzing('#modal-text');}	
+				else if($(e.target).is('#btn-upload')) {e.preventDefault();}
 				if($("#search2").val().trim().length == 0) {
 					$("#search2").prop("rows", 1);
 					$("#search2").val("");
@@ -68,6 +83,11 @@
 		});
 		
 		$("#search2").keyup(function(){
+			var buzzing = $("#search2").val();
+			if(buzzing.search("@") != -1) {
+				var id = buzzing.substring(buzzing.indexOf("@")+1, buzzing.length);
+			}
+			
 			if($("#search2").val().trim().length > 0) $('#buzzing').attr("class", "btn btn-search-bar");
 			else $('#buzzing').attr("class", "btn btn-search-bar disabled");
 			$('#textCount').html($("#search2").val().length);
@@ -83,7 +103,7 @@
 			$("#search2").prop("rows", 5);
 			$("#appended").remove();
 			$("#inputarea").append("<div id='appended' style='text-align:right'>"+
-								       "<span id='textCount'>"+ $("#search2").val().length +"</span>/140&nbsp;&nbsp;<button id='buzzing' class='btn btn-search-bar disabled'>버징하기</button>"+
+								       "<input type='file' id='file' name='file' /><button onclick='fileUpload(event)' id='btn-upload' class='button1 white selected glyphicon glyphicon-camera' onfocus='this.blur();'></button><span id='textCount'>"+ $("#search2").val().length +"</span>/140&nbsp;&nbsp;<button id='buzzing' class='btn btn-search-bar disabled'>버징하기</button>"+
 								   "</div>");
 			if($("#search2").val().length > 140) $('#textCount').css("color", "red");
 			else if($("#search2").val().trim().length > 0) {
@@ -111,7 +131,9 @@
 		msg = data.substring(data.indexOf(":") + 1, data.lastIndexOf("$"));
 		boardNo = data.substring(data.lastIndexOf("$") + 1);
 		data = data.replace(/\n/gi, "</br>");
-		var html = '<div class="media lists" id="lists">'+
+		newBuzzingCount += 1;
+		var htmlNew = '<div id="newBuzzing" onclick="showNewBuzzing()" style="display:none">새로운 버징 '+ newBuzzingCount +'개 보기</div>';
+		var html = '<div class="media lists new" id="lists" style="display:none">'+
 				       '<a class="media-left" href="#fake">'+
 				           '<img alt="" class="media-object img-rounded" src="http://placehold.it/64x64">'+
 				       '</a>'+
@@ -126,11 +148,24 @@
 				       '</div>'+
 				  '</div>';
 		$("#buz").prepend(html);
+		$("#newBuzzing").remove();
+		$("#buz").prepend(htmlNew);
+		if(newBuzzingCount == 1 && !(id == "${loginDTO.username}")) $("#newBuzzing").slideDown("slow");
+		else {
+			if(id == "${loginDTO.username}") showNewBuzzing();
+			else $("#newBuzzing").css("display", "block");  
+		}
 	}
 
 	// 서버와 연결을 끊었을 때
 	function onClose(evt) {
 		$("#buz").append("서버 오류");
+	}
+	
+	function showNewBuzzing() {
+		$(".media.lists.new").css("display", "block");
+		$("#newBuzzing").remove();
+		newBuzzingCount=0;
 	}
 
 	function buzzing(id) {
@@ -162,7 +197,21 @@
 	
 	function contentPopUp(b_no) {
 		$('#content-modal').modal();
-		$('#modal-bno').val(b_no);
+		
+		var request = $.ajax({url:"ajax/content", method:"GET", data:{b_no:b_no}, dataType:"json", 
+		  success: function () {},
+	      error: function (jqXHR) {
+	        alert(jqXHR.status);
+	        alert(jqXHR.statusText);
+	        alert(jqXHR.responseText);
+	        alert(jqXHR.readyState);
+	      }});
+		request.done(function(data){
+			$("#content-modal-name").val(data.m_name);
+			$("#content-modal-id").val(data.m_id);
+			$("#content-modal-name").attr("href", data.m_id);
+			$("#content-modal-content").text(data.b_content);
+		});
 	}
   </script>
 </head>
@@ -344,8 +393,7 @@
                <div class="media-body">
                   <div class="form-group has-feedback" id='inputarea'>
                      <label class="control-label sr-only" for="inputSuccess5">Hidden label</label>
-                     	<textarea class="form-control" id="search2" aria-describedby="search" placeholder='무슨 일이 일어나고 있나요?' rows='1'></textarea>
-                     <span class="glyphicon glyphicon-camera form-control-feedback" aria-hidden="true" onclick='alert("구현 아직 안됐다잉");'></span>
+                     	<textarea class="form-control" id="search2" aria-describedby="search" placeholder='무슨 일이 일어나고 있나요?' rows='1' role='textbox'></textarea>
                      <span id="search2" class="sr-only">(success)</span>
                   </div>
                </div>
@@ -388,11 +436,11 @@
 	        <a class="media-left" href="#fake" style='float:left;'>
             	<img alt="" class="media-object img-rounded" src="http://placehold.it/40x40">
             </a>
-            <h4 class="media-heading" style='line-height:20px'>홍길동<br/><a href='admin'>@admin</a></h4>
+            <h4 class="media-heading" id='content-modal-name' style='line-height:20px'>홍길동<br/><a href='admin' id='content-modal-id'>@admin</a></h4>
 	      </div>
 	      <!-- body -->
 	      <div class="modal-body">
-	            <h2>asdf</h2>
+	            <h2 id='content-modal-content'></h2>
 	      </div>
 	      <!-- Footer -->
 	      <div class="modal-footer">
@@ -488,6 +536,11 @@
     </section>
     <!-- /MAIN ë ´ì © -->
     <!--main content end-->
+    <style>                                         
+		#file { width:0; height:0; } 
+		#btn-upload{border:0;outline:0;background-color:transparent;}
+	</style>
+	
   </section>
   <span class="blank"></span>
   </span>

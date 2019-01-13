@@ -14,11 +14,14 @@
 		<result property='b_rdate' column='B_RDATE'></result>
 	</resultMap>
 	
+	<select id='selectByIdMember' parameterType='String' resultType='MemberAndBoard'>
+		select * from MEMBER natural join BOARD where M_ID=#{m_id} order by B_RDATE desc
+	</select>
 	<select id='selectById' parameterType='String' resultType='MemberAndBoard'>
 		select * from (
 			select * from BOARD natural join (select * from MEMBER where M_NO in (select M_NO2 from FOLLOWING where M_ID=#{id})) 
 			union all
-			select * from BOARD natural join MEMBER where M_ID=#{id}
+			select * from BOARD natural join MEMBER where M_ID=#{m_id}
 		) order by B_RDATE desc
 	</select>
 	<select id='selectByNo' parameterType='long' resultType='MemberAndBoard'>
@@ -53,6 +56,10 @@
 	<!-- append -->
 	
 	<!-- for Ajax -->
+	<select id='content' parameterType='long' resultType='MemberAndBoard'>
+		select * from BOARD natural join MEMBER where B_NO=#{b_no}
+	</select>
+	
 	<insert id="insertLikes" parameterType='map'>
 		insert into LIKES values(#{b_no}, #{m_no})
 	</insert>

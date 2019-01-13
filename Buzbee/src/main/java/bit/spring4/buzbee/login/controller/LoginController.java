@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login() {
+	@Secured("USER_ANONYMOUS")
+	@RequestMapping("/login/join")
+	public String join() {
+		return "login/join";
 	}
 	
 	@Secured("USER_ANONYMOUS")

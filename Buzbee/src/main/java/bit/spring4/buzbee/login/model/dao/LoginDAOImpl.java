@@ -22,6 +22,11 @@ public class LoginDAOImpl implements LoginDAO {
 	}
 	
 	@Override
+	public Member selectByNo(long m_no) {
+		return sqlSession.selectOne(ns + "selectByNo", m_no);
+	}
+	
+	@Override
 	public Member selectByEmail(String email) {
 		return null;
 	}
@@ -43,6 +48,10 @@ public class LoginDAOImpl implements LoginDAO {
 	
 	@Override
 	public long selectM_NOById(String id) {
-		return sqlSession.selectOne(ns + ".selectM_NOById", id);
+		try {
+			return sqlSession.selectOne(ns + ".selectM_NOById", id);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 }

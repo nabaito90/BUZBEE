@@ -6,6 +6,7 @@ public interface LoginDAO {
 	boolean insert(Member member);
 	boolean delete(String id);
 	boolean update(Member member);
+	Member selectByNo(long m_no);
 	Member selectByPhone(String phone);
 	Member selectByEmail(String email);
 	Member selectById(String id);

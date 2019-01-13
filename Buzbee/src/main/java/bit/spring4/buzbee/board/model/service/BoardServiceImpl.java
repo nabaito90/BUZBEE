@@ -17,8 +17,13 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO dao;
 	
 	@Override
-	public List<Board> selectByIdService(String id) {
-		return dao.selectById(id);
+	public List<MemberAndBoard> selectByIdMemberService(String m_id) {
+		return dao.selectByIdMember(m_id);
+	}
+	
+	@Override
+	public List<MemberAndBoard> selectByIdService(String m_id) {
+		return dao.selectById(m_id);
 	}
 	
 	@Override
@@ -58,5 +63,10 @@ public class BoardServiceImpl implements BoardService {
 		map.put("b_no", b_no);
 		map.put("m_no", m_no);
 		return dao.insertLikes(map);
+	}
+	
+	@Override
+	public MemberAndBoard contentService(long b_no) {
+		return dao.content(b_no);
 	}
 }

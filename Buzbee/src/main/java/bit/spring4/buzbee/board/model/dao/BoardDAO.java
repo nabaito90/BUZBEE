@@ -6,7 +6,8 @@ import bit.spring4.buzbee.model.Board;
 import bit.spring4.buzbee.model.MemberAndBoard;
 
 public interface BoardDAO {
-	List<Board> selectById(String id);
+	List<MemberAndBoard> selectByIdMember(String id);
+	List<MemberAndBoard> selectById(String id);
 	List<MemberAndBoard> selectByNo(long m_no);
 	long insert(Board board);
 	long countBuzzes(long m_no);
@@ -17,4 +18,5 @@ public interface BoardDAO {
 	
 	// for Ajax
 	boolean insertLikes(Map<String, Long> map);
+	MemberAndBoard content(long b_no);
 }

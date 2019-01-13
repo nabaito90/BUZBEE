@@ -15,8 +15,13 @@ public class BoardDAOImpl implements BoardDAO {
 	private String ns = "bit.spring4.buzbee.model.Board";
 	
 	@Override
-	public List<Board> selectById(String id) {
-		return sqlSession.selectList(ns + ".selectById", id);
+	public List<MemberAndBoard> selectByIdMember(String m_id) {
+		return sqlSession.selectList(ns + ".selectByIdMember", m_id);
+	}
+	
+	@Override
+	public List<MemberAndBoard> selectById(String m_id) {
+		return sqlSession.selectList(ns + ".selectById", m_id);
 	}
 	
 	@Override
@@ -67,5 +72,10 @@ public class BoardDAOImpl implements BoardDAO {
 			sqlSession.update(ns + ".minusLikes", map);
 			return false;
 		}
+	}
+	
+	@Override
+	public MemberAndBoard content(long b_no) {
+		return sqlSession.selectOne(ns + ".content", b_no);
 	}
 }

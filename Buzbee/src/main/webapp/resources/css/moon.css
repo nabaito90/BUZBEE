@@ -31,6 +31,9 @@ body.modal-open {overflow: scroll;}
 .label.label-theme.pull-right.mail-info{margin:0;font-size:1.4rem;padding:6px}
 .glyphicon{margin:0}
 .modal-header{padding:10px}
+#newBuzzing{text-align:center;padding:10px;background:GhostWhite}
+#newBuzzing:hover{background:LightGray}
+#btn-upload{float:left}
 
 /* 좋아요 버튼 시작 */
 heart_body{
